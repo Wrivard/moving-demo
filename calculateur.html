@@ -1727,85 +1727,85 @@ margin: 0rem !important;
                 const destinationLabel = getDestinationLabel(data['Multi-Form-11-Country']);
                 
                 successMessage.innerHTML = `
-                  <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #d4a574; margin: 20px 0;">
-                    <h3 style="color: #d4a574; margin-bottom: 20px; font-size: 24px;">Votre estimation est prête</h3>
+                  <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 40px; border-radius: 8px; border: 1px solid #d4a574; margin: 20px 0;">
+                    <h3 style="color: #d4a574; margin-bottom: 30px; font-size: 28px; text-align: center;">Votre estimation est prête</h3>
                     
-                    <div style="text-align: center; margin-bottom: 30px;">
-                      <div style="font-size: 36px; font-weight: bold; color: #d4a574; margin-bottom: 10px;">
+                    <div style="text-align: center; margin-bottom: 40px;">
+                      <div style="font-size: 48px; font-weight: bold; color: #d4a574; margin-bottom: 10px;">
                         ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
                       </div>
-                      <p style="color: #cccccc; margin: 0;">Prix final estimé</p>
+                      <p style="color: #cccccc; margin: 0; font-size: 16px;">Prix final estimé</p>
                     </div>
                     
-                    <div style="background-color: #2a2a2a; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
-                      <h4 style="color: #d4a574; margin: 0 0 15px 0; font-size: 18px;">Détail de l'estimation</h4>
+                    <div style="background-color: #2a2a2a; padding: 25px; border-radius: 6px; margin-bottom: 30px;">
+                      <h4 style="color: #d4a574; margin: 0 0 20px 0; font-size: 20px;">Détail de l'estimation</h4>
                       
-                      <div style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 12px;">
                         <strong style="color: #ffffff;">Type de service:</strong> ${serviceTypeLabel}
                       </div>
-                      <div style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 12px;">
                         <strong style="color: #ffffff;">Type de résidence:</strong> ${residenceTypeLabel}
                       </div>
-                      <div style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 12px;">
                         <strong style="color: #ffffff;">Distance:</strong> ${data['Multi-Form-11-Distance'] || 0} km
                       </div>
                       ${selectedServices ? `
-                      <div style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 12px;">
                         <strong style="color: #ffffff;">Services additionnels:</strong> ${selectedServices}
                       </div>
                       ` : ''}
                       ${selectedComplexItems ? `
-                      <div style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 12px;">
                         <strong style="color: #ffffff;">Articles complexes:</strong> ${selectedComplexItems}
                       </div>
                       ` : ''}
-                      <div style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 12px;">
                         <strong style="color: #ffffff;">Étages:</strong> ${floorLabel}
                       </div>
-                      <div style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 12px;">
                         <strong style="color: #ffffff;">Région de destination:</strong> ${destinationLabel}
                       </div>
-                      <div style="margin-bottom: 15px;">
+                      <div style="margin-bottom: 20px;">
                         <strong style="color: #ffffff;">Date de déménagement:</strong> ${data['Multi-Form-11-Date'] || 'Non spécifiée'}
                       </div>
                       
                       <hr style="border: none; border-top: 1px solid #555; margin: 20px 0;">
                       
-                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                         <span style="color: #ffffff;">Prix de base:</span>
                         <span style="color: #d4a574; font-weight: bold;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
                       </div>
                       ${breakdown.distanceCost > 0 ? `
-                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                         <span style="color: #ffffff;">Distance (${data['Multi-Form-11-Distance'] || 0} km):</span>
                         <span style="color: #d4a574; font-weight: bold;">+${breakdown.distanceCost}$</span>
                       </div>
                       ` : ''}
                       ${breakdown.servicesCost > 0 ? `
-                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                         <span style="color: #ffffff;">Services additionnels:</span>
                         <span style="color: #d4a574; font-weight: bold;">+${breakdown.servicesCost}$</span>
                       </div>
                       ` : ''}
                       ${breakdown.complexItemsCost > 0 ? `
-                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                         <span style="color: #ffffff;">Articles complexes:</span>
                         <span style="color: #d4a574; font-weight: bold;">+${breakdown.complexItemsCost}$</span>
                       </div>
                       ` : ''}
                       ${breakdown.floorCost > 0 ? `
-                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                         <span style="color: #ffffff;">Étages sans ascenseur:</span>
                         <span style="color: #d4a574; font-weight: bold;">+${breakdown.floorCost}$</span>
                       </div>
                       ` : ''}
-                      <div style="display: flex; justify-content: space-between; font-weight: bold; color: #d4a574; margin-top: 15px; padding-top: 15px; border-top: 2px solid #d4a574;">
+                      <div style="display: flex; justify-content: space-between; font-weight: bold; color: #d4a574; margin-top: 20px; padding-top: 15px; border-top: 2px solid #d4a574; font-size: 18px;">
                         <span>Total estimé:</span>
                         <span>${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
                       </div>
                     </div>
                     
-                    <div style="background-color: #2a2a2a; padding: 15px; border-radius: 6px; text-align: center;">
+                    <div style="background-color: #2a2a2a; padding: 20px; border-radius: 6px; text-align: center;">
                       <p style="color: #ffffff; margin: 0; font-size: 16px;">
                         Un expert vous contactera dans les <strong style="color: #d4a574;">24h</strong> pour un devis personnalisé.
                       </p>
@@ -1835,41 +1835,8 @@ margin: 0rem !important;
       const serviceTypeInputs = document.querySelectorAll('input[name="Multi-form-11-Type"]');
       
       function updateQuotePreview() {
-        const quote = calculatePreviewQuote();
-        
-        // Show preview in step 2
-        let previewElement = document.getElementById('quote-preview');
-        if (!previewElement) {
-          previewElement = document.createElement('div');
-          previewElement.id = 'quote-preview';
-          previewElement.style.cssText = 'margin-top: 20px;';
-          document.querySelector('[data-form="step"]:nth-child(3) .multi-form11_form-content').appendChild(previewElement);
-        }
-        
-        if (quote.minPrice > 0) {
-          previewElement.innerHTML = `
-            <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); padding: 25px; border-radius: 12px; border: 2px solid #d4a574; margin: 20px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.2);">
-              <div style="display: flex; align-items: center; margin-bottom: 15px;">
-                <span style="background: #d4a574; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 14px;">💰</span>
-                <h4 style="color: #d4a574; margin: 0; font-size: 18px;">Estimation en temps réel</h4>
-              </div>
-              <div style="font-size: 28px; font-weight: bold; color: #d4a574; margin: 15px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                ${quote.minPrice}$ - ${quote.maxPrice}$
-              </div>
-              <p style="color: #cccccc; font-size: 14px; margin: 0; opacity: 0.8;">
-                Prix mis à jour selon vos sélections
-              </p>
-            </div>
-          `;
-        } else {
-          previewElement.innerHTML = `
-            <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; border: 1px solid #555; margin: 20px 0; text-align: center;">
-              <p style="color: #888; margin: 0; font-size: 14px;">
-                Sélectionnez vos options pour voir l'estimation
-              </p>
-            </div>
-          `;
-        }
+        // Real-time preview removed - users will only see price at the end
+        return;
       }
       
       // Add event listeners for real-time preview

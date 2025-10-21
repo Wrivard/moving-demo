@@ -761,20 +761,17 @@ margin: 0rem !important;
                         </div>
                       </div>
                       <div class="multi-form11_form-content">
-                        <div class="multi-form11_field-wrapper"><label for="Form-1-Message" class="form_field-label is-alternate">Type de résidence</label>
-                          <div class="multi-form11_radio-group"><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="radio" name="Multi-form-11-People" id="Multi-form-11-People-Option-1" data-name="Multi-form 11 People" style="opacity:0;position:absolute;z-index:-1" value="Multi-form 11 People Option 1"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-People-Option-1">Petite résidence (1-2 chambres)</span>
-                            </label><label class="form_checkbox-btn is-active-inputactive is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="radio" name="Multi-form-11-People" id="Multi-form-11-People-Option-2" data-name="Multi-form 11 People" style="opacity:0;position:absolute;z-index:-1" value="Multi-form 11 People Option 2"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-People-Option-2">Appartement (2-3 chambres)</span>
-                            </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="radio" name="Multi-form-11-People" id="Multi-form-11-People-Option-3" data-name="Multi-form 11 People" style="opacity:0;position:absolute;z-index:-1" value="Multi-form 11 People Option 3"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-People-Option-3">Maison moyenne (3-4 chambres)</span>
-                            </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="radio" name="Multi-form-11-People" id="Multi-form-11-People-Option-4" data-name="Multi-form 11 People" style="opacity:0;position:absolute;z-index:-1" value="Multi-form 11 People Option 4"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-People-Option-4">Grande maison (4-5 chambres)</span>
-                            </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="radio" name="Multi-form-11-People" id="Multi-form-11-People-Option-5" data-name="Multi-form 11 People" style="opacity:0;position:absolute;z-index:-1" value="Multi-form 11 People Option 5"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-People-Option-5">Maison familiale (5+ chambres)</span>
-                            </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="radio" name="Multi-form-11-People" id="Multi-form-11-People-Option-6" data-name="Multi-form 11 People" style="opacity:0;position:absolute;z-index:-1" value="Multi-form 11 People Option 6"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-People-Option-6">Propriété complexe (bureau, entrepôt)</span>
-                            </label></div>
+                        <div class="multi-form11_field-wrapper">
+                          <label for="Multi-Form-11-Residence-Type" class="form_field-label is-alternate">Type de résidence</label>
+                          <select id="Multi-Form-11-Residence-Type" name="Multi-form-11-People" data-name="Multi-form 11 People" class="form_input is-select-input is-alternate w-select">
+                            <option value="">Sélectionnez le type de résidence</option>
+                            <option value="Multi-form 11 People Option 1">Petite résidence (1-2 chambres)</option>
+                            <option value="Multi-form 11 People Option 2">Appartement (2-3 chambres)</option>
+                            <option value="Multi-form 11 People Option 3">Maison moyenne (3-4 chambres)</option>
+                            <option value="Multi-form 11 People Option 4">Grande maison (4-5 chambres)</option>
+                            <option value="Multi-form 11 People Option 5">Maison familiale (5+ chambres)</option>
+                            <option value="Multi-form 11 People Option 6">Propriété complexe (bureau, entrepôt)</option>
+                          </select>
                         </div>
                         
                         <div class="multi-form11_field-wrapper"><label for="Multi-Form-11-Services" class="form_field-label is-alternate">Services additionnels</label>
@@ -1473,9 +1470,15 @@ margin: 0rem !important;
       
       // Next step
       function nextStep() {
+        // Validate current step before proceeding
+        if (!validateCurrentStep()) {
+          return false;
+        }
+        
         if (currentStep < steps.length - 1) {
           showStep(currentStep + 1);
         }
+        return true;
       }
       
       // Previous step
@@ -1483,6 +1486,146 @@ margin: 0rem !important;
         if (currentStep > 0) {
           showStep(currentStep - 1);
         }
+      }
+      
+      // Validate current step
+      function validateCurrentStep() {
+        const currentStepElement = steps[currentStep];
+        let isValid = true;
+        let errorMessage = '';
+        
+        // Clear previous error messages
+        clearErrorMessages();
+        
+        switch (currentStep) {
+          case 0: // Step 1: Personal Information
+            const name = document.getElementById('Multi-Form-11-Name')?.value?.trim();
+            const email = document.getElementById('Multi-Form-11-Email')?.value?.trim();
+            const phone = document.getElementById('Multi-Form-11-Phone')?.value?.trim();
+            
+            if (!name) {
+              showFieldError('Multi-Form-11-Name', 'Le nom est requis');
+              isValid = false;
+            }
+            if (!email) {
+              showFieldError('Multi-Form-11-Email', 'L\'email est requis');
+              isValid = false;
+            } else if (!isValidEmail(email)) {
+              showFieldError('Multi-Form-11-Email', 'Veuillez entrer un email valide');
+              isValid = false;
+            }
+            if (!phone) {
+              showFieldError('Multi-Form-11-Phone', 'Le téléphone est requis');
+              isValid = false;
+            }
+            break;
+            
+          case 1: // Step 2: Service Type
+            const serviceType = document.querySelector('input[name="Multi-form-11-Type"]:checked');
+            const distance = document.getElementById('Multi-Form-11-Distance')?.value?.trim();
+            
+            if (!serviceType) {
+              errorMessage = 'Veuillez sélectionner un type de service';
+              isValid = false;
+            }
+            if (!distance || distance <= 0) {
+              showFieldError('Multi-Form-11-Distance', 'La distance est requise');
+              isValid = false;
+            }
+            break;
+            
+          case 2: // Step 3: Residence Type and Services
+            const residenceType = document.getElementById('Multi-Form-11-Residence-Type')?.value;
+            
+            if (!residenceType) {
+              showFieldError('Multi-Form-11-Residence-Type', 'Veuillez sélectionner un type de résidence');
+              isValid = false;
+            }
+            break;
+            
+          case 3: // Step 4: Complex Items
+            // This step is optional, so no validation needed
+            break;
+            
+          case 4: // Step 5: Final Details
+            const destination = document.getElementById('Multi-Form-11-Country')?.value;
+            const movingDate = document.getElementById('Multi-Form-11-Date')?.value;
+            const floors = document.querySelector('input[name="Multi-form-11-Floors"]:checked');
+            
+            if (!destination) {
+              showFieldError('Multi-Form-11-Country', 'Veuillez sélectionner une région de destination');
+              isValid = false;
+            }
+            if (!movingDate) {
+              showFieldError('Multi-Form-11-Date', 'Veuillez sélectionner une date de déménagement');
+              isValid = false;
+            }
+            if (!floors) {
+              errorMessage = 'Veuillez sélectionner le nombre d\'étages';
+              isValid = false;
+            }
+            break;
+        }
+        
+        // Show general error message if needed
+        if (!isValid && errorMessage) {
+          showGeneralError(errorMessage);
+        }
+        
+        return isValid;
+      }
+      
+      // Helper function to validate email
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+      
+      // Show field-specific error
+      function showFieldError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        if (field) {
+          field.style.borderColor = '#ff4444';
+          field.style.boxShadow = '0 0 0 1px #ff4444';
+          
+          // Add error message below field
+          let errorDiv = field.parentNode.querySelector('.field-error');
+          if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.style.cssText = 'color: #ff4444; font-size: 12px; margin-top: 4px;';
+            field.parentNode.appendChild(errorDiv);
+          }
+          errorDiv.textContent = message;
+        }
+      }
+      
+      // Show general error message
+      function showGeneralError(message) {
+        const currentStepElement = steps[currentStep];
+        let errorDiv = currentStepElement.querySelector('.step-error');
+        if (!errorDiv) {
+          errorDiv = document.createElement('div');
+          errorDiv.className = 'step-error';
+          errorDiv.style.cssText = 'background-color: #ff4444; color: #ffffff; padding: 12px; border-radius: 8px; margin: 15px 0; text-align: center; font-size: 14px;';
+          currentStepElement.querySelector('.multi-form11_form-content').insertBefore(errorDiv, currentStepElement.querySelector('.multi-form11_form-content').firstChild);
+        }
+        errorDiv.textContent = message;
+      }
+      
+      // Clear error messages
+      function clearErrorMessages() {
+        // Clear field errors
+        document.querySelectorAll('.field-error').forEach(error => error.remove());
+        
+        // Clear general errors
+        document.querySelectorAll('.step-error').forEach(error => error.remove());
+        
+        // Reset field styles
+        document.querySelectorAll('.form_input, .w-input, .w-select').forEach(field => {
+          field.style.borderColor = '';
+          field.style.boxShadow = '';
+        });
       }
       
       // Initialize the form
@@ -1532,6 +1675,13 @@ margin: 0rem !important;
             data[radio.name] = radio.value;
             console.log('Radio button selected:', radio.name, '=', radio.value);
           });
+          
+          // Handle dropdown selections
+          const residenceTypeDropdown = document.getElementById('Multi-Form-11-Residence-Type');
+          if (residenceTypeDropdown && residenceTypeDropdown.value) {
+            data['Multi-form-11-People'] = residenceTypeDropdown.value;
+            console.log('Residence type dropdown selected:', residenceTypeDropdown.value);
+          }
           
           // Handle checkboxes explicitly - collect all checked values
           const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
@@ -1718,12 +1868,18 @@ margin: 0rem !important;
       serviceTypeInputs.forEach(input => {
         input.addEventListener('change', updateQuotePreview);
       });
+      
+      // Add event listener for the new residence type dropdown
+      const residenceTypeDropdown = document.getElementById('Multi-Form-11-Residence-Type');
+      if (residenceTypeDropdown) {
+        residenceTypeDropdown.addEventListener('change', updateQuotePreview);
+      }
     });
 
     // Enhanced quote calculation with all variables
     function calculatePreviewQuote() {
       // Get selected values
-      const selectedResidence = document.querySelector('input[name="Multi-form-11-People"]:checked');
+      const selectedResidence = document.querySelector('input[name="Multi-form-11-People"]:checked') || document.getElementById('Multi-Form-11-Residence-Type');
       const selectedService = document.querySelector('input[name="Multi-form-11-Type"]:checked');
       const distance = document.getElementById('Multi-Form-11-Distance')?.value || 0;
       const selectedServices = document.querySelectorAll('input[name*="Multi-form-11-Services"]:checked');

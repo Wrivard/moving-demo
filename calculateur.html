@@ -1763,67 +1763,68 @@ margin: 0rem !important;
                       
                       <!-- Prix de base -->
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
-                        <div style="display: flex; justify-content: flex-start; align-items: flex-start;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                           <div style="flex: 1;">
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Prix de base (${residenceTypeLabel})</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">Service: ${serviceTypeLabel}</div>
-                            <div style="color: #d4a574; font-weight: bold; font-size: 18px; margin-top: 8px;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</div>
                           </div>
+                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</div>
                         </div>
                       </div>
                       
                       ${breakdown.distanceCost > 0 ? `
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
-                        <div style="display: flex; justify-content: flex-start; align-items: flex-start;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                           <div style="flex: 1;">
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Distance (${data['Multi-Form-11-Distance'] || 0} km)</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">2.50$/km après 10km gratuits</div>
-                            <div style="color: #d4a574; font-weight: bold; font-size: 18px; margin-top: 8px;">+${breakdown.distanceCost}$</div>
                           </div>
+                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.distanceCost}$</div>
                         </div>
                       </div>
                       ` : ''}
                       
                       ${breakdown.servicesCost > 0 ? `
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
-                        <div style="display: flex; justify-content: flex-start; align-items: flex-start;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                           <div style="flex: 1;">
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Services additionnels</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">${getSelectedServices(data['Multi-form-11-Services[]'])}</div>
-                            <div style="color: #d4a574; font-weight: bold; font-size: 18px; margin-top: 8px;">+${breakdown.servicesCost}$</div>
                           </div>
+                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.servicesCost}$</div>
                         </div>
                       </div>
                       ` : ''}
                       
                       ${breakdown.complexItemsCost > 0 ? `
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
-                        <div style="display: flex; justify-content: flex-start; align-items: flex-start;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                           <div style="flex: 1;">
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Articles complexes</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">${getSelectedComplexItems(data['Multi-form-11-Complex[]'])}</div>
-                            <div style="color: #d4a574; font-weight: bold; font-size: 18px; margin-top: 8px;">+${breakdown.complexItemsCost}$</div>
                           </div>
+                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.complexItemsCost}$</div>
                         </div>
                       </div>
                       ` : ''}
                       
                       ${breakdown.floorCost > 0 ? `
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
-                        <div style="display: flex; justify-content: flex-start; align-items: flex-start;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                           <div style="flex: 1;">
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Étages sans ascenseur</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">${floorLabel}</div>
-                            <div style="color: #d4a574; font-weight: bold; font-size: 18px; margin-top: 8px;">+${breakdown.floorCost}$</div>
                           </div>
+                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.floorCost}$</div>
                         </div>
                       </div>
                       ` : ''}
                       
                       <!-- Total Section -->
-                      <div style="display: flex; justify-content: flex-start; font-weight: bold; color: #ffffff; margin-top: 25px; padding-top: 25px; border-top: 2px solid #d4a574; font-size: 20px;">
-                        <span>Total estimé: ${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
-                      </div>
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; color: #ffffff; margin-top: 25px; padding-top: 25px; border-top: 2px solid #d4a574; font-size: 20px;">
+                          <span>Total estimé:</span>
+                          <span>${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
+                        </div>
                     </div>
                     
                     <!-- Contact Message -->
@@ -1846,8 +1847,8 @@ margin: 0rem !important;
             if (successMessage) {
               successMessage.innerHTML = `
                 <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 40px; border-radius: 8px; margin: 20px 0;">
-                  <div style="text-align: left; margin-bottom: 40px;">
-                    <h3 style="color: #ffffff; margin: 0 0 20px 0; font-size: 28px; font-weight: 600;">VOTRE ESTIMATION EST PRÊTE</h3>
+                   <div style="text-align: left; margin-bottom: 40px;">
+                     <h3 style="color: #ffffff; margin: 0 0 20px 0; font-size: 28px; font-weight: 600;">VOTRE ESTIMATION EST PRÊTE</h3>
                     <div style="font-size: 48px; font-weight: bold; color: #d4a574; margin-bottom: 8px;">
                       1200$ - 1800$
                     </div>
@@ -1856,7 +1857,7 @@ margin: 0rem !important;
                   
                   <div style="text-align: left;">
                     <p style="color: #ffffff; margin: 0; font-size: 16px; line-height: 1.5;">
-                      Un expert vous contactera dans les <strong style="color: #d4a574;">48h</strong> pour un devis personnalisé.
+                       Un expert vous contactera dans les <strong style="color: #d4a574;">48h</strong> pour un devis personnalisé.
                     </p>
                   </div>
                 </div>

@@ -340,6 +340,34 @@ textarea.form_input, textarea.w-input {
 .multi-form11_progress {
   background-color: #555 !important;
 }
+
+/* Fix form message styling */
+.form_message-success-wrapper {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.form_message-success {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  padding: 40px !important;
+  margin: 20px 0 !important;
+  border-radius: 8px !important;
+  text-align: left !important;
+}
+
+.form_message-success h3,
+.form_message-success h4 {
+  text-align: left !important;
+}
+
+.form_message-success p {
+  text-align: left !important;
+}
 </style>
 </head>
 <body>
@@ -1721,7 +1749,7 @@ margin: 0rem !important;
                 successMessage.innerHTML = `
                   <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 40px; border-radius: 8px; margin: 20px 0;">
                     <!-- Header Section -->
-                    <div style="text-align: center; margin-bottom: 40px;">
+                    <div style="text-align: left; margin-bottom: 40px;">
                       <h3 style="color: #d4a574; margin: 0 0 20px 0; font-size: 28px; font-weight: 600;">VOTRE ESTIMATION EST PRÊTE</h3>
                       <div style="font-size: 48px; font-weight: bold; color: #d4a574; margin-bottom: 8px;">
                         ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
@@ -1731,7 +1759,7 @@ margin: 0rem !important;
                     
                     <!-- Détail de l'estimation -->
                     <div style="margin-bottom: 30px;">
-                      <h4 style="color: #d4a574; margin: 0 0 25px 0; font-size: 20px; font-weight: 600;">Détail de l'estimation</h4>
+                      <h4 style="color: #d4a574; margin: 0 0 25px 0; font-size: 20px; font-weight: 600; text-align: left;">Détail de l'estimation</h4>
                       
                       <!-- Prix de base -->
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">

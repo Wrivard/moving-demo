@@ -1,4 +1,4 @@
-import { Resend } from 'resend';
+// import { Resend } from 'resend'; // Disabled for demo
 
 export default async function handler(req, res) {
   // CORS headers for cross-origin requests
@@ -43,211 +43,24 @@ export default async function handler(req, res) {
     // Calculate moving quote based on residence type and service
     const quote = calculateMovingQuote(residenceType, serviceType, region);
 
-    // Initialize Resend for email sending
-    if (!process.env.RESEND_API_KEY) {
-      throw new Error('RESEND_API_KEY environment variable missing');
-    }
-    
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const fromEmail = process.env.FROM_EMAIL || 'noreply@demenagementveillette.com';
-    
-    // Business email (hardcoded for demo)
-    const businessEmail = 'info@demenagementveillette.com';
-
-    // Create business email with quote details
-    const businessEmailContent = `
-      <!DOCTYPE html>
-      <html>
-      <head><meta charset="utf-8"></head>
-      <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f4f0;">
-        <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto;">
-          <tr>
-            <td>
-              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                <!-- Header -->
-                <tr>
-                  <td style="background-color: #2c3e50; color: #ffffff; text-align: center; padding: 30px;">
-                    <h1 style="margin: 0; font-size: 28px; font-weight: bold;">🚚 Nouvelle Demande de Devis</h1>
-                    <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Calculateur de déménagement</p>
-                  </td>
-                </tr>
-                
-                <!-- Content -->
-                <tr>
-                  <td style="padding: 40px 30px; background-color: #ffffff;">
-                    <h2 style="color: #2c3e50; margin: 0 0 20px 0; font-size: 20px; border-bottom: 2px solid #d4a574; padding-bottom: 10px;">👤 Informations du Client</h2>
-                    <table width="100%" cellpadding="8" cellspacing="0" style="margin-bottom: 30px;">
-                      <tr>
-                        <td style="font-weight: bold; color: #2c3e50; width: 120px; vertical-align: top;">Nom:</td>
-                        <td style="color: #34495e;">${name}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: bold; color: #2c3e50; vertical-align: top;">Email:</td>
-                        <td style="color: #34495e;"><a href="mailto:${email}" style="color: #d4a574; text-decoration: none;">${email}</a></td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: bold; color: #2c3e50; vertical-align: top;">Type de service:</td>
-                        <td style="color: #34495e;">${getServiceTypeLabel(serviceType)}</td>
-                      </tr>
-                      <tr>
-                        <td style="font-weight: bold; color: #2c3e50; vertical-align: top;">Type de résidence:</td>
-                        <td style="color: #34495e;">${getResidenceTypeLabel(residenceType)}</td>
-                      </tr>
-                      ${company ? `
-                      <tr>
-                        <td style="font-weight: bold; color: #2c3e50; vertical-align: top;">Entreprise:</td>
-                        <td style="color: #34495e;">${company}</td>
-                      </tr>
-                      ` : ''}
-                      ${currentAddress ? `
-                      <tr>
-                        <td style="font-weight: bold; color: #2c3e50; vertical-align: top;">Adresse actuelle:</td>
-                        <td style="color: #34495e;">${currentAddress}</td>
-                      </tr>
-                      ` : ''}
-                      ${region ? `
-                      <tr>
-                        <td style="font-weight: bold; color: #2c3e50; vertical-align: top;">Région:</td>
-                        <td style="color: #34495e;">${region}</td>
-                      </tr>
-                      ` : ''}
-                      ${moveDate ? `
-                      <tr>
-                        <td style="font-weight: bold; color: #2c3e50; vertical-align: top;">Date prévue:</td>
-                        <td style="color: #34495e;">${moveDate}</td>
-                      </tr>
-                      ` : ''}
-                    </table>
-                    
-                    <h2 style="color: #2c3e50; margin: 0 0 15px 0; font-size: 20px; border-bottom: 2px solid #d4a574; padding-bottom: 10px;">💰 Estimation Calculée</h2>
-                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #d4a574; text-align: center;">
-                      <div style="font-size: 24px; font-weight: bold; color: #2c3e50; margin-bottom: 10px;">
-                        ${quote.minPrice}$ - ${quote.maxPrice}$
-                      </div>
-                      <div style="color: #34495e; font-size: 14px;">
-                        Estimation basée sur: ${getResidenceTypeLabel(residenceType)} - ${getServiceTypeLabel(serviceType)}
-                      </div>
-                    </div>
-                    
-                    ${projectDetails ? `
-                    <h2 style="color: #2c3e50; margin: 20px 0 15px 0; font-size: 20px; border-bottom: 2px solid #d4a574; padding-bottom: 10px;">📝 Détails Supplémentaires</h2>
-                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #d4a574; line-height: 1.6; color: #34495e;">
-                      ${projectDetails.replace(/\n/g, '<br>')}
-                    </div>
-                    ` : ''}
-                  </td>
-                </tr>
-                
-                <!-- Action Button -->
-                <tr>
-                  <td style="padding: 0 30px 40px 30px; text-align: center;">
-                    <a href="mailto:${email}?subject=Devis personnalisé - Déménagement Veillette & Fils" style="display: inline-block; background-color: #d4a574; color: #ffffff; text-decoration: none; padding: 15px 30px; border-radius: 6px; font-weight: bold; font-size: 16px; transition: background-color 0.3s;">
-                      📧 Contacter le Client
-                    </a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </body>
-      </html>
-    `;
-
-    // Send business email
-    const { data, error } = await resend.emails.send({
-      from: fromEmail,
-      to: businessEmail,
-      subject: `🚚 Nouvelle Demande de Devis - ${name} (${getResidenceTypeLabel(residenceType)})`,
-      html: businessEmailContent,
-      replyTo: email
+    // For demo purposes - skip email sending for now
+    console.log('Quote calculated:', {
+      name,
+      email,
+      serviceType: getServiceTypeLabel(serviceType),
+      residenceType: getResidenceTypeLabel(residenceType),
+      quote,
+      projectDetails,
+      company,
+      currentAddress,
+      region,
+      moveDate
     });
-
-    if (error) {
-      console.error('Business email error:', error);
-      return res.status(500).json({
-        success: false,
-        message: 'Failed to send email'
-      });
-    }
-
-    // Send confirmation email to customer with quote
-    const confirmationContent = `
-      <!DOCTYPE html>
-      <html>
-      <head><meta charset="utf-8"></head>
-      <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f5f4f0;">
-        <table width="100%" cellpadding="0" cellspacing="0" style="max-width: 600px; margin: 0 auto;">
-          <tr>
-            <td>
-              <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-                <tr>
-                  <td style="background-color: #d4a574; color: #ffffff; text-align: center; padding: 30px;">
-                    <h1 style="margin: 0; font-size: 28px; font-weight: bold;">✅ Votre Devis est Prêt!</h1>
-                    <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">Estimation personnalisée</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 40px 30px; background-color: #ffffff; text-align: center;">
-                    <p style="font-size: 18px; color: #2c3e50; margin: 0 0 20px 0;">Bonjour <strong>${name}</strong>,</p>
-                    <p style="font-size: 16px; color: #34495e; line-height: 1.6; margin: 0 0 25px 0;">
-                      Merci d'avoir utilisé notre calculateur de déménagement ! Voici votre estimation personnalisée.
-                    </p>
-                    
-                    <div style="background-color: #f8f9fa; padding: 30px; border-radius: 8px; margin: 20px 0; border: 2px solid #d4a574;">
-                      <h3 style="color: #2c3e50; margin: 0 0 15px 0; font-size: 20px;">💰 Estimation de Votre Déménagement</h3>
-                      <div style="font-size: 32px; font-weight: bold; color: #d4a574; margin: 15px 0;">
-                        ${quote.minPrice}$ - ${quote.maxPrice}$
-                      </div>
-                      <div style="color: #34495e; font-size: 14px; margin-top: 10px;">
-                        <strong>Service:</strong> ${getServiceTypeLabel(serviceType)}<br>
-                        <strong>Type de résidence:</strong> ${getResidenceTypeLabel(residenceType)}
-                      </div>
-                    </div>
-                    
-                    <div style="background-color: #e8f4f8; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: left;">
-                      <h4 style="color: #2c3e50; margin: 0 0 10px 0;">📋 Prochaines Étapes:</h4>
-                      <ul style="color: #34495e; margin: 0; padding-left: 20px;">
-                        <li>Un de nos experts vous contactera dans les 24h</li>
-                        <li>Nous planifierons une visite d'évaluation gratuite</li>
-                        <li>Vous recevrez un devis détaillé et personnalisé</li>
-                        <li>Nous organiserons votre déménagement sans stress</li>
-                      </ul>
-                    </div>
-                    
-                    <p style="font-size: 16px; color: #34495e; margin: 25px 0 0 0;">
-                      Cordialement,<br>
-                      <strong style="color: #2c3e50;">L'équipe Déménagement Veillette & Fils</strong><br>
-                      <span style="font-size: 14px;">(514) 506-0292 | info@demenagementveillette.com</span>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-        </table>
-      </body>
-      </html>
-    `;
-
-    // Send confirmation email (don't fail if this fails)
-    try {
-      await resend.emails.send({
-        from: fromEmail,
-        to: email,
-        subject: 'Votre estimation de déménagement - Déménagement Veillette & Fils',
-        html: confirmationContent,
-        replyTo: businessEmail
-      });
-    } catch (confirmationError) {
-      console.warn('Confirmation email failed:', confirmationError);
-    }
 
     res.status(200).json({
       success: true,
-      message: 'Quote calculated and sent successfully!',
-      quote: quote,
-      data: data
+      message: 'Quote calculated successfully! (Demo mode - no emails sent)',
+      quote: quote
     });
 
   } catch (error) {

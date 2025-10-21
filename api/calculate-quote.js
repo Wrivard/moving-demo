@@ -24,12 +24,16 @@ export default async function handler(req, res) {
       'Multi-Form-11-Email': email,
       'Multi-form-11-Type': serviceType,
       'Multi-Form-11-Budget': budget,
+      'Multi-Form-11-Distance': distance,
       'Multi-Form-11-Project': projectDetails,
       'Multi-Form-11-Company': company,
       'Multi-form-11-People': residenceType,
       'Multi-Form-11-Link': currentAddress,
       'Multi-Form-11-Country': region,
-      'Multi-Form-11-Date': moveDate
+      'Multi-Form-11-Date': moveDate,
+      'Multi-form-11-Services': services,
+      'Multi-form-11-Complex': complexItems,
+      'Multi-form-11-Floors': floors
     } = req.body;
 
     // Validate required fields
@@ -40,8 +44,8 @@ export default async function handler(req, res) {
       });
     }
 
-    // Calculate moving quote based on residence type and service
-    const quote = calculateMovingQuote(residenceType, serviceType, region);
+    // Calculate moving quote with all variables
+    const quote = calculateMovingQuote(residenceType, serviceType, region, distance, services, complexItems, floors);
 
     // For demo purposes - skip email sending for now
     console.log('Quote calculated:', {
@@ -49,6 +53,10 @@ export default async function handler(req, res) {
       email,
       serviceType: getServiceTypeLabel(serviceType),
       residenceType: getResidenceTypeLabel(residenceType),
+      distance: distance || 'Non spécifiée',
+      services: services || [],
+      complexItems: complexItems || [],
+      floors: floors || '0',
       quote,
       projectDetails,
       company,
@@ -72,8 +80,8 @@ export default async function handler(req, res) {
   }
 }
 
-// Calculate moving quote based on residence type and service
-function calculateMovingQuote(residenceType, serviceType, region) {
+// Calculate moving quote with all variables
+function calculateMovingQuote(residenceType, serviceType, region, distance, services, complexItems, floors) {
   // Base pricing for different residence types
   const basePrices = {
     'Multi-form 11 People Option 1': { min: 800, max: 1200 }, // Petite résidence
@@ -92,15 +100,84 @@ function calculateMovingQuote(residenceType, serviceType, region) {
     'Multi-form 11 Type Option 4': 1.2   // Autre
   };
 
+  // Distance pricing (per km)
+  const distanceRate = 2.5; // $2.50 per km
+
+  // Additional services pricing
+  const servicePrices = {
+    'emballage': 200,
+    'montage': 150,
+    'nettoyage': 100,
+    'entreposage': 300
+  };
+
+  // Complex items pricing
+  const complexItemPrices = {
+    'piano': 300,
+    'billard': 250,
+    'antiquites': 200,
+    'electromenager': 150,
+    'jardin': 100,
+    'aucun': 0
+  };
+
+  // Floor pricing
+  const floorPrices = {
+    '0': 0,    // Rez-de-chaussée
+    '1': 50,   // 1er étage
+    '2': 100,  // 2e étage
+    '3': 150   // 3e étage et plus
+  };
+
   // Get base price
   const basePrice = basePrices[residenceType] || { min: 1000, max: 1500 };
-  const multiplier = serviceMultipliers[serviceType] || 1.0;
+  const serviceMultiplier = serviceMultipliers[serviceType] || 1.0;
+
+  // Calculate distance cost
+  const distanceCost = distance ? Math.max(0, (parseFloat(distance) - 10) * distanceRate) : 0; // First 10km free
+
+  // Calculate additional services cost
+  let servicesCost = 0;
+  if (services) {
+    const servicesArray = Array.isArray(services) ? services : [services];
+    servicesCost = servicesArray.reduce((total, service) => {
+      return total + (servicePrices[service] || 0);
+    }, 0);
+  }
+
+  // Calculate complex items cost
+  let complexItemsCost = 0;
+  if (complexItems) {
+    const complexArray = Array.isArray(complexItems) ? complexItems : [complexItems];
+    complexItemsCost = complexArray.reduce((total, item) => {
+      return total + (complexItemPrices[item] || 0);
+    }, 0);
+  }
+
+  // Calculate floor cost
+  const floorCost = floorPrices[floors] || 0;
+
+  // Calculate total additional costs
+  const totalAdditionalCosts = distanceCost + servicesCost + complexItemsCost + floorCost;
+
+  // Apply service multiplier to base price and add additional costs
+  const finalMinPrice = Math.round((basePrice.min * serviceMultiplier) + totalAdditionalCosts);
+  const finalMaxPrice = Math.round((basePrice.max * serviceMultiplier) + totalAdditionalCosts);
 
   return {
-    minPrice: Math.round(basePrice.min * multiplier),
-    maxPrice: Math.round(basePrice.max * multiplier),
+    minPrice: finalMinPrice,
+    maxPrice: finalMaxPrice,
     basePrice: basePrice,
-    multiplier: multiplier
+    serviceMultiplier: serviceMultiplier,
+    breakdown: {
+      basePrice: basePrice,
+      serviceMultiplier: serviceMultiplier,
+      distanceCost: Math.round(distanceCost),
+      servicesCost: servicesCost,
+      complexItemsCost: complexItemsCost,
+      floorCost: floorCost,
+      totalAdditionalCosts: Math.round(totalAdditionalCosts)
+    }
   };
 }
 

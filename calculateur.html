@@ -19,6 +19,64 @@
   -moz-osx-font-smoothing: grayscale;
   -o-font-smoothing: antialiased;
 }
+
+/* Fix form styling issues */
+.form_input, .w-input, .w-select {
+  color: #ffffff !important;
+  background-color: #2c3e50 !important;
+  border: 1px solid #555 !important;
+}
+
+.form_input::placeholder, .w-input::placeholder {
+  color: #cccccc !important;
+}
+
+/* Fix dropdown options */
+select option {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+}
+
+/* Fix radio button styling */
+.form_checkbox-btn.is-active-inputactive {
+  background-color: #d4a574 !important;
+  color: #ffffff !important;
+}
+
+.form_checkbox-btn {
+  background-color: #2c3e50 !important;
+  color: #ffffff !important;
+  border: 1px solid #555 !important;
+}
+
+.form_checkbox-btn:hover {
+  background-color: #34495e !important;
+}
+
+/* Fix button styling */
+.button.is-secondary {
+  background-color: #34495e !important;
+  color: #ffffff !important;
+  border: 1px solid #555 !important;
+}
+
+.button.is-secondary:hover {
+  background-color: #2c3e50 !important;
+}
+
+/* Fix input field icons */
+.form_input[type="email"], .form_input[type="date"] {
+  padding-left: 40px !important;
+}
+
+/* Fix progress bar */
+.multi-form11_progress-bar {
+  background-color: #d4a574 !important;
+}
+
+.multi-form11_progress {
+  background-color: #555 !important;
+}
 </style>
 </head>
 <body>
@@ -458,13 +516,13 @@ margin: 0rem !important;
                         
                         <div class="multi-form11_field-wrapper"><label for="Multi-Form-11-Services" class="form_field-label is-alternate">Services additionnels</label>
                           <div class="multi-form11_radio-group"><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Services" id="Multi-form-11-Services-1" data-name="Multi-form 11 Services" style="opacity:0;position:absolute;z-index:-1" value="emballage"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Services-1">Emballage professionnel (+200$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Services[]" id="Multi-form-11-Services-1" data-name="Multi-form 11 Services" style="opacity:0;position:absolute;z-index:-1" value="emballage"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Services-1">Emballage professionnel (+200$)</span>
                             </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Services" id="Multi-form-11-Services-2" data-name="Multi-form 11 Services" style="opacity:0;position:absolute;z-index:-1" value="montage"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Services-2">Montage/Démontage meubles (+150$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Services[]" id="Multi-form-11-Services-2" data-name="Multi-form 11 Services" style="opacity:0;position:absolute;z-index:-1" value="montage"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Services-2">Montage/Démontage meubles (+150$)</span>
                             </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Services" id="Multi-form-11-Services-3" data-name="Multi-form 11 Services" style="opacity:0;position:absolute;z-index:-1" value="nettoyage"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Services-3">Nettoyage final (+100$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Services[]" id="Multi-form-11-Services-3" data-name="Multi-form 11 Services" style="opacity:0;position:absolute;z-index:-1" value="nettoyage"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Services-3">Nettoyage final (+100$)</span>
                             </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Services" id="Multi-form-11-Services-4" data-name="Multi-form 11 Services" style="opacity:0;position:absolute;z-index:-1" value="entreposage"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Services-4">Entreposage temporaire (+300$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Services[]" id="Multi-form-11-Services-4" data-name="Multi-form 11 Services" style="opacity:0;position:absolute;z-index:-1" value="entreposage"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Services-4">Entreposage temporaire (+300$)</span>
                             </label></div>
                         </div>
                         
@@ -489,17 +547,17 @@ margin: 0rem !important;
                       <div class="multi-form11_form-content">
                         <div class="multi-form11_field-wrapper"><label for="Multi-Form-11-Complex" class="form_field-label is-alternate">Articles complexes</label>
                           <div class="multi-form11_radio-group"><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex" id="Multi-form-11-Complex-1" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="piano"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-1">Piano (+300$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex[]" id="Multi-form-11-Complex-1" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="piano"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-1">Piano (+300$)</span>
                             </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex" id="Multi-form-11-Complex-2" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="billard"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-2">Table de billard (+250$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex[]" id="Multi-form-11-Complex-2" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="billard"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-2">Table de billard (+250$)</span>
                             </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex" id="Multi-form-11-Complex-3" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="antiquites"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-3">Antiquités/Art (+200$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex[]" id="Multi-form-11-Complex-3" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="antiquites"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-3">Antiquités/Art (+200$)</span>
                             </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex" id="Multi-form-11-Complex-4" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="electromenager"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-4">Électroménagers lourds (+150$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex[]" id="Multi-form-11-Complex-4" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="electromenager"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-4">Électroménagers lourds (+150$)</span>
                             </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex" id="Multi-form-11-Complex-5" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="jardin"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-5">Équipement de jardin (+100$)</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex[]" id="Multi-form-11-Complex-5" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="jardin"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-5">Équipement de jardin (+100$)</span>
                             </label><label class="form_checkbox-btn is-alternate w-radio">
-                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex" id="Multi-form-11-Complex-6" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="aucun"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-6">Aucun article complexe</span>
+                              <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_checkbox-btn-icon is-alternate w-radio-input"></div><input type="checkbox" name="Multi-form-11-Complex[]" id="Multi-form-11-Complex-6" data-name="Multi-form 11 Complex" style="opacity:0;position:absolute;z-index:-1" value="aucun"><span class="form_checkbox-btn-label is-alternate w-form-label" for="Multi-form-11-Complex-6">Aucun article complexe</span>
                             </label></div>
                         </div>
                         
@@ -1053,13 +1111,81 @@ margin: 0rem !important;
           step.style.display = index === 0 ? 'block' : 'none';
         });
         updateProgress();
+        fixFormStyling();
+      }
+      
+      // Fix form styling issues
+      function fixFormStyling() {
+        // Fix input text color (black text on dark bg)
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+          input.style.color = '#ffffff';
+          input.style.backgroundColor = '#2c3e50';
+          input.style.border = '1px solid #555';
+        });
+        
+        // Fix email field padding to avoid icon overlap
+        const emailInput = document.getElementById('Multi-Form-11-Email');
+        if (emailInput) {
+          emailInput.style.paddingLeft = '40px';
+        }
+        
+        // Fix date field padding to avoid icon overlap
+        const dateInput = document.getElementById('Multi-Form-11-Date');
+        if (dateInput) {
+          dateInput.style.paddingLeft = '40px';
+        }
+        
+        // Fix dropdown options styling
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+          select.style.color = '#ffffff';
+          select.style.backgroundColor = '#2c3e50';
+          // Add option styling
+          const options = select.querySelectorAll('option');
+          options.forEach(option => {
+            option.style.backgroundColor = '#2c3e50';
+            option.style.color = '#ffffff';
+          });
+        });
+        
+        // Fix radio button functionality
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(radio => {
+          radio.addEventListener('change', function() {
+            // Remove active class from all radio buttons in the same group
+            const groupName = this.name;
+            const groupRadios = document.querySelectorAll(`input[name="${groupName}"]`);
+            groupRadios.forEach(r => {
+              r.closest('label').classList.remove('is-active-inputactive');
+            });
+            // Add active class to selected radio button
+            this.closest('label').classList.add('is-active-inputactive');
+          });
+        });
+        
+        // Fix checkbox functionality
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+          checkbox.addEventListener('change', function() {
+            if (this.checked) {
+              this.closest('label').classList.add('is-active-inputactive');
+            } else {
+              this.closest('label').classList.remove('is-active-inputactive');
+            }
+          });
+        });
       }
       
       // Update progress bar and step counter
       function updateProgress() {
         const progress = ((currentStep + 1) / steps.length) * 100;
-        progressBar.style.width = progress + '%';
-        stepTag.textContent = `Étape ${currentStep + 1}/${steps.length}`;
+        if (progressBar) {
+          progressBar.style.width = progress + '%';
+        }
+        if (stepTag) {
+          stepTag.textContent = `Étape ${currentStep + 1}/${steps.length}`;
+        }
       }
       
       // Show specific step
@@ -1069,6 +1195,8 @@ margin: 0rem !important;
         });
         currentStep = stepIndex;
         updateProgress();
+        // Re-apply styling fixes when switching steps
+        setTimeout(fixFormStyling, 100);
       }
       
       // Next step

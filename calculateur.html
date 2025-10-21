@@ -324,10 +324,17 @@ select option:checked {
   padding-left: 45px !important;
 }
 
-/* Custom date picker styling - Shadcn style */
-.form_input[type="date"] {
-  padding-left: 12px !important;
-  padding-right: 12px !important;
+/* Shadcn-style date picker */
+.date-picker-container {
+  position: relative !important;
+  display: inline-block !important;
+  width: 100% !important;
+}
+
+.date-picker-input {
+  width: 100% !important;
+  padding: 8px 12px !important;
+  padding-right: 40px !important;
   background-color: #2a2a2a !important;
   border: 1px solid #555 !important;
   border-radius: 6px !important;
@@ -335,36 +342,37 @@ select option:checked {
   font-size: 14px !important;
   height: 40px !important;
   transition: all 0.2s ease !important;
+  cursor: pointer !important;
 }
 
-.form_input[type="date"]:focus {
+.date-picker-input:focus {
   outline: none !important;
   border-color: #f58220 !important;
   box-shadow: 0 0 0 2px rgba(245, 130, 32, 0.2) !important;
 }
 
-.form_input[type="date"]:hover {
+.date-picker-input:hover {
   border-color: #777 !important;
 }
 
-/* Style the date picker icon */
-.form_input[type="date"]::-webkit-calendar-picker-indicator {
-  background: transparent !important;
+.date-picker-icon {
+  position: absolute !important;
+  right: 12px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
   color: #f58220 !important;
-  cursor: pointer !important;
-  width: 20px !important;
-  height: 20px !important;
-  opacity: 1 !important;
+  pointer-events: none !important;
+  width: 16px !important;
+  height: 16px !important;
 }
 
-/* Firefox date picker styling */
-.form_input[type="date"]::-moz-calendar-picker-indicator {
-  background: transparent !important;
-  color: #f58220 !important;
-  cursor: pointer !important;
-  width: 20px !important;
-  height: 20px !important;
-  opacity: 1 !important;
+.date-picker-input::placeholder {
+  color: #888 !important;
+}
+
+/* Hide the original date input */
+.form_input[type="date"] {
+  display: none !important;
 }
 
 /* Textarea styling */
@@ -924,11 +932,14 @@ margin: 0rem !important;
                             <option value="Autre">Autre région</option>
                           </select></div>
                         <div class="multi-form11_field-wrapper"><label for="Form-21-Project" class="form_field-label is-alternate">Date de déménagement prévue</label>
-                          <div class="multi-form11_input-field"><input class="form_input w-input" maxlength="256" name="Multi-Form-11-Date" data-name="Multi Form 11 Date" placeholder="jj/mm/aa" type="text" id="Multi-Form-11-Date" required="">
-                            <div class="form-icon-left">
-                              <div class="icon-embed-xsmall w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 24 24" fill="none" preserveaspectratio="xMidYMid meet" aria-hidden="true" role="img">
+                          <div class="multi-form11_input-field">
+                            <div class="date-picker-container">
+                              <input class="date-picker-input" type="date" name="Multi-Form-11-Date" data-name="Multi Form 11 Date" id="Multi-Form-11-Date" required="">
+                              <div class="date-picker-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 24 24" fill="none" preserveaspectratio="xMidYMid meet" aria-hidden="true" role="img">
                                   <path d="M3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6C21 5.46957 20.7893 4.96086 20.4142 4.58579C20.0391 4.21071 19.5304 4 19 4H17V2H15V4H9V2H7V4H5C4.46957 4 3.96086 4.21071 3.58579 4.58579C3.21071 4.96086 3 5.46957 3 6ZM19 20H5V8H19V20Z" fill="currentColor"></path>
-                                </svg></div>
+                                </svg>
+                              </div>
                             </div>
                           </div>
                         </div>

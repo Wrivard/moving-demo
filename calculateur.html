@@ -32,8 +32,8 @@
 }
 
 .form_input:focus, .w-input:focus {
-  border-color: #d4a574 !important;
-  box-shadow: 0 0 0 1px #d4a574 !important;
+  border-color: #f58220 !important;
+  box-shadow: 0 0 0 1px #f58220 !important;
   outline: none !important;
   background-color: #1a1a1a !important;
 }
@@ -72,8 +72,8 @@
 }
 
 .w-select:focus, .form_input.is-select-input:focus {
-  border-color: #d4a574 !important;
-  box-shadow: 0 0 0 1px #d4a574 !important;
+  border-color: #f58220 !important;
+  box-shadow: 0 0 0 1px #f58220 !important;
   outline: none !important;
 }
 
@@ -90,7 +90,7 @@ select option:hover {
 }
 
 select option:checked {
-  background-color: #d4a574 !important;
+  background-color: #f58220 !important;
   color: #ffffff !important;
 }
 
@@ -117,8 +117,8 @@ select option:checked {
 .form_checkbox-btn.is-active-inputactive {
   background-color: #1a1a1a !important;
   color: #ffffff !important;
-  border-color: #d4a574 !important;
-  box-shadow: 0 0 0 1px #d4a574 !important;
+  border-color: #f58220 !important;
+  box-shadow: 0 0 0 1px #f58220 !important;
 }
 
 /* Shadcn-style radio button icon */
@@ -134,8 +134,8 @@ select option:checked {
 }
 
 .form_checkbox-btn.is-active-inputactive .form_checkbox-btn-icon {
-  border-color: #d4a574 !important;
-  background-color: #d4a574 !important;
+  border-color: #f58220 !important;
+  background-color: #f58220 !important;
 }
 
 .form_checkbox-btn.is-active-inputactive .form_checkbox-btn-icon::after {
@@ -183,8 +183,8 @@ select option:checked {
 }
 
 .form_checkbox-btn input[type="checkbox"]:checked + .form_checkbox-btn-icon {
-  background-color: #d4a574 !important;
-  border-color: #d4a574 !important;
+  background-color: #f58220 !important;
+  border-color: #f58220 !important;
 }
 
 .form_checkbox-btn input[type="checkbox"]:checked + .form_checkbox-btn-icon::after {
@@ -221,8 +221,8 @@ select option:checked {
 .form_radio-btn.is-active-inputactive {
   background-color: #1a1a1a !important;
   color: #ffffff !important;
-  border-color: #d4a574 !important;
-  box-shadow: 0 0 0 1px #d4a574 !important;
+  border-color: #f58220 !important;
+  box-shadow: 0 0 0 1px #f58220 !important;
 }
 
 /* Step 2 radio button icon */
@@ -238,8 +238,8 @@ select option:checked {
 }
 
 .form_radio-btn.is-active-inputactive .form_radio-btn-icon {
-  border-color: #d4a574 !important;
-  background-color: #d4a574 !important;
+  border-color: #f58220 !important;
+  background-color: #f58220 !important;
 }
 
 .form_radio-btn.is-active-inputactive .form_radio-btn-icon::after {
@@ -284,8 +284,8 @@ select option:checked {
 }
 
 .form_radio-btn.is-active-inputactive .form_radio-btn-letter {
-  background-color: #d4a574 !important;
-  border-color: #d4a574 !important;
+  background-color: #f58220 !important;
+  border-color: #f58220 !important;
   color: #ffffff !important;
 }
 
@@ -321,7 +321,7 @@ select option:checked {
 
 /* Fix input field icons */
 .form_input[type="email"], .form_input[type="date"] {
-  padding-left: 45px !important;
+  padding-left: 50px !important;
 }
 
 /* Textarea styling */
@@ -334,7 +334,7 @@ textarea.form_input, textarea.w-input {
 
 /* Fix progress bar */
 .multi-form11_progress-bar {
-  background-color: #d4a574 !important;
+  background-color: #f58220 !important;
 }
 
 .multi-form11_progress {
@@ -1751,7 +1751,7 @@ margin: 0rem !important;
                     <!-- Header Section -->
                     <div style="text-align: left; margin-bottom: 40px;">
                       <h3 style="color: #ffffff; margin: 0 0 20px 0; font-size: 28px; font-weight: 600;">VOTRE ESTIMATION EST PRÊTE</h3>
-                      <div style="font-size: 48px; font-weight: bold; color: #d4a574; margin-bottom: 8px;">
+                      <div style="font-size: 48px; font-weight: bold; color: #f58220; margin-bottom: 8px;">
                         ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
                       </div>
                       <p style="color: #888888; margin: 0; font-size: 16px;">Prix final estimé</p>
@@ -1759,7 +1759,7 @@ margin: 0rem !important;
                     
                     <!-- Détail de l'estimation -->
                     <div style="margin-bottom: 30px;">
-                      <h4 style="color: #d4a574; margin: 0 0 25px 0; font-size: 20px; font-weight: 600; text-align: left;">Détail de l'estimation</h4>
+                      <h4 style="color: #f58220; margin: 0 0 25px 0; font-size: 20px; font-weight: 600; text-align: left;">Détail de l'estimation</h4>
                       
                       <!-- Prix de base -->
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
@@ -1768,7 +1768,7 @@ margin: 0rem !important;
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Prix de base (${residenceTypeLabel})</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">Service: ${serviceTypeLabel}</div>
                           </div>
-                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</div>
+                          <div style="color: #f58220; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</div>
                         </div>
                       </div>
                       
@@ -1779,7 +1779,7 @@ margin: 0rem !important;
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Distance (${data['Multi-Form-11-Distance'] || 0} km)</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">2.50$/km après 10km gratuits</div>
                           </div>
-                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.distanceCost}$</div>
+                          <div style="color: #f58220; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.distanceCost}$</div>
                         </div>
                       </div>
                       ` : ''}
@@ -1791,7 +1791,7 @@ margin: 0rem !important;
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Services additionnels</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">${getSelectedServices(data['Multi-form-11-Services[]'])}</div>
                           </div>
-                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.servicesCost}$</div>
+                          <div style="color: #f58220; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.servicesCost}$</div>
                         </div>
                       </div>
                       ` : ''}
@@ -1803,7 +1803,7 @@ margin: 0rem !important;
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Articles complexes</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">${getSelectedComplexItems(data['Multi-form-11-Complex[]'])}</div>
                           </div>
-                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.complexItemsCost}$</div>
+                          <div style="color: #f58220; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.complexItemsCost}$</div>
                         </div>
                       </div>
                       ` : ''}
@@ -1815,22 +1815,22 @@ margin: 0rem !important;
                             <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Étages sans ascenseur</div>
                             <div style="color: #888; font-size: 14px; line-height: 1.4;">${floorLabel}</div>
                           </div>
-                          <div style="color: #d4a574; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.floorCost}$</div>
+                          <div style="color: #f58220; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.floorCost}$</div>
                         </div>
                       </div>
                       ` : ''}
                       
                       <!-- Total Section -->
-                        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 25px; padding-top: 25px; border-top: 2px solid #d4a574; font-size: 20px;">
+                        <div style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 25px; padding-top: 25px; border-top: 2px solid #f58220; font-size: 20px;">
                           <span style="color: #ffffff;">Total estimé:</span>
-                          <span style="color: #d4a574;">${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
+                          <span style="color: #f58220;">${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
                         </div>
                     </div>
                     
                     <!-- Contact Message -->
                     <div style="text-align: left;">
                       <p style="color: #ffffff; margin: 0; font-size: 16px; line-height: 1.5;">
-                        Un expert vous contactera dans les <strong style="color: #d4a574;">48h</strong> pour un devis personnalisé.
+                        Un expert vous contactera dans les <strong style="color: #f58220;">48h</strong> pour un devis personnalisé.
                       </p>
                     </div>
                   </div>
@@ -1849,7 +1849,7 @@ margin: 0rem !important;
                 <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 40px; border-radius: 8px; margin: 20px 0;">
                    <div style="text-align: left; margin-bottom: 40px;">
                      <h3 style="color: #ffffff; margin: 0 0 20px 0; font-size: 28px; font-weight: 600;">VOTRE ESTIMATION EST PRÊTE</h3>
-                    <div style="font-size: 48px; font-weight: bold; color: #d4a574; margin-bottom: 8px;">
+                    <div style="font-size: 48px; font-weight: bold; color: #f58220; margin-bottom: 8px;">
                       1200$ - 1800$
                     </div>
                     <p style="color: #888888; margin: 0; font-size: 16px;">Prix final estimé</p>
@@ -1857,7 +1857,7 @@ margin: 0rem !important;
                   
                   <div style="text-align: left;">
                     <p style="color: #ffffff; margin: 0; font-size: 16px; line-height: 1.5;">
-                       Un expert vous contactera dans les <strong style="color: #d4a574;">48h</strong> pour un devis personnalisé.
+                       Un expert vous contactera dans les <strong style="color: #f58220;">48h</strong> pour un devis personnalisé.
                     </p>
                   </div>
                 </div>

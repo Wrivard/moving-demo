@@ -304,7 +304,7 @@ margin: 0rem !important;
               <a href="#" class="navbar3_dropdown-link w-dropdown-link">Emballage et entreposage</a>
             </nav>
           </div>
-          <a href="#" class="navbar3_link w-nav-link">Calculateur</a>
+          <a href="calculateur.html" class="navbar3_link w-nav-link">Calculateur</a>
           <a href="#" class="navbar3_tablet-menu-button w-button">Soumission</a>
         </nav>
         <a href="#" class="navbar3_logo-link w-nav-brand"><img width="107" loading="lazy" alt="" src="images/relume-480959.png" class="navbar3_logo"></a>
@@ -355,7 +355,7 @@ margin: 0rem !important;
                       </div>
                       <div class="multi-form11_step-tag">Étape 1/5</div>
                     </div>
-                    <div data-form="step" class="multi-form11_step">
+                    <div data-form="step" class="multi-form11_step" style="display: block;">
                       <div class="margin-bottom margin-medium">
                         <div class="text-align-center">
                           <h2 class="heading-style-h4">Commençons par vos informations personnelles</h2>
@@ -381,7 +381,7 @@ margin: 0rem !important;
                         </div>
                       </div>
                     </div>
-                    <div data-form="step" class="multi-form11_step">
+                    <div data-form="step" class="multi-form11_step" style="display: none;">
                       <div class="margin-bottom margin-medium">
                         <div class="text-align-center">
                           <h2 class="heading-style-h4">Quel type de déménagement planifiez-vous?</h2>
@@ -430,7 +430,7 @@ margin: 0rem !important;
                         </div>
                       </div>
                     </div>
-                    <div data-form="step" class="multi-form11_step">
+                    <div data-form="step" class="multi-form11_step" style="display: none;">
                       <div class="margin-bottom margin-medium">
                         <div class="text-align-center">
                           <h2 class="heading-style-h4">Type de résidence et services</h2>
@@ -477,7 +477,7 @@ margin: 0rem !important;
                       </div>
                     </div>
                     
-                    <div data-form="step" class="multi-form11_step">
+                    <div data-form="step" class="multi-form11_step" style="display: none;">
                       <div class="margin-bottom margin-medium">
                         <div class="text-align-center">
                           <h2 class="heading-style-h4">Articles complexes et spéciaux</h2>
@@ -521,7 +521,7 @@ margin: 0rem !important;
                         </div>
                       </div>
                     </div>
-                    <div data-form="step" class="multi-form11_step">
+                    <div data-form="step" class="multi-form11_step" style="display: none;">
                       <div class="margin-bottom margin-medium">
                         <div class="text-align-center">
                           <h2 class="heading-style-h4">Confirmez votre disponibilité</h2>
@@ -1040,6 +1040,64 @@ margin: 0rem !important;
       const successMessage = document.querySelector('.w-form-done');
       const errorMessage = document.querySelector('.w-form-fail');
       const submitBtn = document.querySelector('[data-form="submit-btn"]');
+      
+      // Multi-step form functionality
+      let currentStep = 0;
+      const steps = document.querySelectorAll('[data-form="step"]');
+      const stepTag = document.querySelector('.multi-form11_step-tag');
+      const progressBar = document.querySelector('[data-form="progress-indicator"]');
+      
+      // Initialize form
+      function initMultiStepForm() {
+        steps.forEach((step, index) => {
+          step.style.display = index === 0 ? 'block' : 'none';
+        });
+        updateProgress();
+      }
+      
+      // Update progress bar and step counter
+      function updateProgress() {
+        const progress = ((currentStep + 1) / steps.length) * 100;
+        progressBar.style.width = progress + '%';
+        stepTag.textContent = `Étape ${currentStep + 1}/${steps.length}`;
+      }
+      
+      // Show specific step
+      function showStep(stepIndex) {
+        steps.forEach((step, index) => {
+          step.style.display = index === stepIndex ? 'block' : 'none';
+        });
+        currentStep = stepIndex;
+        updateProgress();
+      }
+      
+      // Next step
+      function nextStep() {
+        if (currentStep < steps.length - 1) {
+          showStep(currentStep + 1);
+        }
+      }
+      
+      // Previous step
+      function prevStep() {
+        if (currentStep > 0) {
+          showStep(currentStep - 1);
+        }
+      }
+      
+      // Initialize the form
+      initMultiStepForm();
+      
+      // Add event listeners for navigation buttons
+      document.addEventListener('click', function(e) {
+        if (e.target.matches('[data-form="next-btn"]')) {
+          e.preventDefault();
+          nextStep();
+        } else if (e.target.matches('[data-form="back-btn"]')) {
+          e.preventDefault();
+          prevStep();
+        }
+      });
 
       if (form) {
         form.addEventListener('submit', async function(e) {

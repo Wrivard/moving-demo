@@ -37,55 +37,108 @@ select option {
   color: #ffffff !important;
 }
 
-/* Fix radio button styling - Use proper brand colors and fix text contrast */
+/* Shadcn-style radio buttons with proper contrast */
 .form_checkbox-btn {
   background-color: #1a1a1a !important;
   color: #ffffff !important;
-  border: 1px solid #333 !important;
-  transition: all 0.3s ease !important;
+  border: 2px solid #374151 !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
   cursor: pointer !important;
+  padding: 12px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  position: relative !important;
 }
 
 .form_checkbox-btn:hover {
   background-color: #2a2a2a !important;
-  border-color: #555 !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+  border-color: #6b7280 !important;
 }
 
 .form_checkbox-btn.is-active-inputactive {
-  background-color: #d4a574 !important;
+  background-color: #1a1a1a !important;
   color: #ffffff !important;
   border-color: #d4a574 !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3) !important;
+  box-shadow: 0 0 0 1px #d4a574 !important;
 }
 
-.form_checkbox-btn.is-active-inputactive:hover {
-  background-color: #c19a5f !important;
-  border-color: #c19a5f !important;
-}
-
-/* Fix the radio button icon styling - make letters visible */
+/* Shadcn-style radio button icon */
 .form_checkbox-btn-icon {
-  background-color: #333 !important;
-  border: 1px solid #555 !important;
-  color: #ffffff !important;
+  width: 20px !important;
+  height: 20px !important;
+  border: 2px solid #6b7280 !important;
+  border-radius: 50% !important;
+  background-color: transparent !important;
+  position: relative !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
 }
 
 .form_checkbox-btn.is-active-inputactive .form_checkbox-btn-icon {
-  background-color: #ffffff !important;
-  border-color: #ffffff !important;
-  color: #d4a574 !important;
+  border-color: #d4a574 !important;
+  background-color: #d4a574 !important;
 }
 
-/* Fix radio button text contrast */
+.form_checkbox-btn.is-active-inputactive .form_checkbox-btn-icon::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 8px !important;
+  height: 8px !important;
+  background-color: #ffffff !important;
+  border-radius: 50% !important;
+}
+
+/* Radio button text styling */
 .form_checkbox-btn-label {
   color: #ffffff !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
 }
 
 .form_checkbox-btn.is-active-inputactive .form_checkbox-btn-label {
   color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* Hide the actual radio input */
+.form_checkbox-btn input[type="radio"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Checkbox styling (for services) */
+.form_checkbox-btn input[type="checkbox"] {
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Checkbox icon styling */
+.form_checkbox-btn input[type="checkbox"] + .form_checkbox-btn-icon {
+  border-radius: 4px !important;
+}
+
+.form_checkbox-btn input[type="checkbox"]:checked + .form_checkbox-btn-icon {
+  background-color: #d4a574 !important;
+  border-color: #d4a574 !important;
+}
+
+.form_checkbox-btn input[type="checkbox"]:checked + .form_checkbox-btn-icon::after {
+  content: '✓' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
 }
 
 /* Fix button styling - Keep on brand with smooth transitions */
@@ -1196,7 +1249,7 @@ margin: 0rem !important;
           });
         });
         
-        // Fix radio button functionality with proper visual feedback
+        // Fix radio button functionality with shadcn-style visual feedback
         const radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(radio => {
           radio.addEventListener('change', function() {
@@ -1206,69 +1259,29 @@ margin: 0rem !important;
             groupRadios.forEach(r => {
               const label = r.closest('label');
               label.classList.remove('is-active-inputactive');
-              label.style.backgroundColor = '#1a1a1a';
-              label.style.borderColor = '#333';
-              label.style.color = '#ffffff';
             });
             // Add active class to selected radio button
             const selectedLabel = this.closest('label');
             selectedLabel.classList.add('is-active-inputactive');
-            selectedLabel.style.backgroundColor = '#d4a574';
-            selectedLabel.style.borderColor = '#d4a574';
-            selectedLabel.style.color = '#ffffff';
-          });
-          
-          // Add hover effects
-          radio.addEventListener('mouseenter', function() {
-            if (!this.checked) {
-              const label = this.closest('label');
-              label.style.backgroundColor = '#2a2a2a';
-              label.style.borderColor = '#555';
-            }
-          });
-          
-          radio.addEventListener('mouseleave', function() {
-            if (!this.checked) {
-              const label = this.closest('label');
-              label.style.backgroundColor = '#1a1a1a';
-              label.style.borderColor = '#333';
-            }
+            
+            // Update quote preview if on step 2
+            updateQuotePreview();
           });
         });
         
-        // Fix checkbox functionality with proper visual feedback
+        // Fix checkbox functionality with shadcn-style visual feedback
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
           checkbox.addEventListener('change', function() {
             const label = this.closest('label');
             if (this.checked) {
               label.classList.add('is-active-inputactive');
-              label.style.backgroundColor = '#d4a574';
-              label.style.borderColor = '#d4a574';
-              label.style.color = '#ffffff';
             } else {
               label.classList.remove('is-active-inputactive');
-              label.style.backgroundColor = '#1a1a1a';
-              label.style.borderColor = '#333';
-              label.style.color = '#ffffff';
             }
-          });
-          
-          // Add hover effects
-          checkbox.addEventListener('mouseenter', function() {
-            if (!this.checked) {
-              const label = this.closest('label');
-              label.style.backgroundColor = '#2a2a2a';
-              label.style.borderColor = '#555';
-            }
-          });
-          
-          checkbox.addEventListener('mouseleave', function() {
-            if (!this.checked) {
-              const label = this.closest('label');
-              label.style.backgroundColor = '#1a1a1a';
-              label.style.borderColor = '#333';
-            }
+            
+            // Update quote preview
+            updateQuotePreview();
           });
         });
       }
@@ -1497,26 +1510,39 @@ margin: 0rem !important;
       const serviceTypeInputs = document.querySelectorAll('input[name="Multi-form-11-Type"]');
       
       function updateQuotePreview() {
-        const selectedResidence = document.querySelector('input[name="Multi-form-11-People"]:checked');
-        const selectedService = document.querySelector('input[name="Multi-form-11-Type"]:checked');
+        const quote = calculatePreviewQuote();
         
-        if (selectedResidence && selectedService) {
-          // Calculate preview quote
-          const quote = calculatePreviewQuote(selectedResidence.value, selectedService.value);
-          
-          // Show preview in step 2
-          let previewElement = document.getElementById('quote-preview');
-          if (!previewElement) {
-            previewElement = document.createElement('div');
-            previewElement.id = 'quote-preview';
-            previewElement.style.cssText = 'background-color: #e8f4f8; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center;';
-            document.querySelector('[data-form="step"]:nth-child(3) .multi-form11_form-content').appendChild(previewElement);
-          }
-          
+        // Show preview in step 2
+        let previewElement = document.getElementById('quote-preview');
+        if (!previewElement) {
+          previewElement = document.createElement('div');
+          previewElement.id = 'quote-preview';
+          previewElement.style.cssText = 'margin-top: 20px;';
+          document.querySelector('[data-form="step"]:nth-child(3) .multi-form11_form-content').appendChild(previewElement);
+        }
+        
+        if (quote.minPrice > 0) {
           previewElement.innerHTML = `
-            <div style="color: #2c3e50; font-weight: bold; margin-bottom: 5px;">Estimation préliminaire:</div>
-            <div style="font-size: 20px; color: #d4a574; font-weight: bold;">${quote.minPrice}$ - ${quote.maxPrice}$</div>
-            <div style="font-size: 12px; color: #666; margin-top: 5px;">* Estimation basée sur vos sélections</div>
+            <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); padding: 25px; border-radius: 12px; border: 2px solid #d4a574; margin: 20px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.2);">
+              <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <span style="background: #d4a574; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 14px;">💰</span>
+                <h4 style="color: #d4a574; margin: 0; font-size: 18px;">Estimation en temps réel</h4>
+              </div>
+              <div style="font-size: 28px; font-weight: bold; color: #d4a574; margin: 15px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                ${quote.minPrice}$ - ${quote.maxPrice}$
+              </div>
+              <p style="color: #cccccc; font-size: 14px; margin: 0; opacity: 0.8;">
+                Prix mis à jour selon vos sélections
+              </p>
+            </div>
+          `;
+        } else {
+          previewElement.innerHTML = `
+            <div style="background: #2a2a2a; padding: 20px; border-radius: 8px; border: 1px solid #555; margin: 20px 0; text-align: center;">
+              <p style="color: #888; margin: 0; font-size: 14px;">
+                Sélectionnez vos options pour voir l'estimation
+              </p>
+            </div>
           `;
         }
       }
@@ -1531,8 +1557,21 @@ margin: 0rem !important;
       });
     });
 
-    // Preview quote calculation (simplified version)
-    function calculatePreviewQuote(residenceType, serviceType) {
+    // Enhanced quote calculation with all variables
+    function calculatePreviewQuote() {
+      // Get selected values
+      const selectedResidence = document.querySelector('input[name="Multi-form-11-People"]:checked');
+      const selectedService = document.querySelector('input[name="Multi-form-11-Type"]:checked');
+      const distance = document.getElementById('Multi-Form-11-Distance')?.value || 0;
+      const selectedServices = document.querySelectorAll('input[name*="Multi-form-11-Services"]:checked');
+      const selectedComplex = document.querySelectorAll('input[name*="Multi-form-11-Complex"]:checked');
+      const selectedFloors = document.querySelector('input[name="Multi-form-11-Floors"]:checked');
+
+      if (!selectedResidence || !selectedService) {
+        return { minPrice: 0, maxPrice: 0 };
+      }
+
+      // Base pricing
       const basePrices = {
         'Multi-form 11 People Option 1': { min: 800, max: 1200 },
         'Multi-form 11 People Option 2': { min: 600, max: 900 },
@@ -1549,12 +1588,51 @@ margin: 0rem !important;
         'Multi-form 11 Type Option 4': 1.2
       };
 
-      const basePrice = basePrices[residenceType] || { min: 1000, max: 1500 };
-      const multiplier = serviceMultipliers[serviceType] || 1.0;
+      // Additional costs
+      const servicePrices = {
+        'emballage': 200,
+        'montage': 150,
+        'nettoyage': 100,
+        'entreposage': 300
+      };
+
+      const complexItemPrices = {
+        'piano': 300,
+        'billard': 250,
+        'antiquites': 200,
+        'electromenager': 150,
+        'jardin': 100,
+        'aucun': 0
+      };
+
+      const floorPrices = {
+        '0': 0,
+        '1': 50,
+        '2': 100,
+        '3': 150
+      };
+
+      // Calculate costs
+      const basePrice = basePrices[selectedResidence.value] || { min: 1000, max: 1500 };
+      const serviceMultiplier = serviceMultipliers[selectedService.value] || 1.0;
+      const distanceCost = Math.max(0, (parseFloat(distance) - 10) * 2.5);
+      
+      let servicesCost = 0;
+      selectedServices.forEach(service => {
+        servicesCost += servicePrices[service.value] || 0;
+      });
+
+      let complexItemsCost = 0;
+      selectedComplex.forEach(item => {
+        complexItemsCost += complexItemPrices[item.value] || 0;
+      });
+
+      const floorCost = floorPrices[selectedFloors?.value] || 0;
+      const totalAdditionalCosts = distanceCost + servicesCost + complexItemsCost + floorCost;
 
       return {
-        minPrice: Math.round(basePrice.min * multiplier),
-        maxPrice: Math.round(basePrice.max * multiplier)
+        minPrice: Math.round((basePrice.min * serviceMultiplier) + totalAdditionalCosts),
+        maxPrice: Math.round((basePrice.max * serviceMultiplier) + totalAdditionalCosts)
       };
     }
 

@@ -37,7 +37,7 @@ select option {
   color: #ffffff !important;
 }
 
-/* Fix radio button styling - Use brand gold color with smooth transitions */
+/* Fix radio button styling - Use proper brand colors and fix text contrast */
 .form_checkbox-btn {
   background-color: #1a1a1a !important;
   color: #ffffff !important;
@@ -64,6 +64,28 @@ select option {
 .form_checkbox-btn.is-active-inputactive:hover {
   background-color: #c19a5f !important;
   border-color: #c19a5f !important;
+}
+
+/* Fix the radio button icon styling - make letters visible */
+.form_checkbox-btn-icon {
+  background-color: #333 !important;
+  border: 1px solid #555 !important;
+  color: #ffffff !important;
+}
+
+.form_checkbox-btn.is-active-inputactive .form_checkbox-btn-icon {
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  color: #d4a574 !important;
+}
+
+/* Fix radio button text contrast */
+.form_checkbox-btn-label {
+  color: #ffffff !important;
+}
+
+.form_checkbox-btn.is-active-inputactive .form_checkbox-btn-label {
+  color: #ffffff !important;
 }
 
 /* Fix button styling - Keep on brand with smooth transitions */
@@ -1328,13 +1350,14 @@ margin: 0rem !important;
             }
           });
           
-          // Handle radio buttons explicitly
+          // Handle radio buttons explicitly - ensure they override form data
           const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
           radioButtons.forEach(radio => {
             data[radio.name] = radio.value;
+            console.log('Radio button selected:', radio.name, '=', radio.value);
           });
           
-          // Handle checkboxes explicitly
+          // Handle checkboxes explicitly - collect all checked values
           const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
           checkboxes.forEach(checkbox => {
             if (data[checkbox.name]) {
@@ -1346,7 +1369,11 @@ margin: 0rem !important;
             } else {
               data[checkbox.name] = checkbox.value;
             }
+            console.log('Checkbox selected:', checkbox.name, '=', checkbox.value);
           });
+          
+          // Debug: Log all form data being sent
+          console.log('Form data being sent to API:', data);
 
           try {
             // Submit to API
@@ -1361,68 +1388,88 @@ margin: 0rem !important;
             const result = await response.json();
             
             if (result.success) {
-              // Show success message with detailed quote - ON BRAND DARK THEME
+              // Show success message with beautiful, professional quote design
               form.style.display = 'none';
               if (successMessage) {
                 const breakdown = result.quote.breakdown;
                 successMessage.innerHTML = `
-                  <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 40px; border-radius: 12px; border: 2px solid #d4a574; margin: 20px 0;">
-                    <div style="text-align: center;">
-                      <h3 style="color: #d4a574; margin-bottom: 30px; font-size: 28px; font-weight: bold;">🎉 Votre estimation est prête!</h3>
-                      
-                      <div style="background-color: #2a2a2a; padding: 30px; border-radius: 8px; border: 1px solid #333; margin: 20px 0;">
-                        <h4 style="color: #d4a574; margin-bottom: 20px; font-size: 20px;">💰 Estimation de votre déménagement</h4>
-                        <div style="font-size: 36px; font-weight: bold; color: #d4a574; margin: 20px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                          ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
-                        </div>
-                        
-                        <div style="background-color: #1a1a1a; padding: 25px; border-radius: 8px; margin: 25px 0; text-align: left; border: 1px solid #333;">
-                          <h5 style="color: #d4a574; margin-bottom: 20px; font-size: 18px;">📋 Détail de l'estimation:</h5>
-                          <div style="font-size: 14px; color: #ffffff; line-height: 1.8;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
-                              <span>Prix de base (${getResidenceTypeLabel(data['Multi-form-11-People'])}):</span>
-                              <span style="color: #d4a574; font-weight: bold;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
-                            </div>
-                            ${breakdown.distanceCost > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
-                              <span>Distance (${data['Multi-Form-11-Distance'] || 0} km):</span>
-                              <span style="color: #d4a574; font-weight: bold;">+${breakdown.distanceCost}$</span>
-                            </div>
-                            ` : ''}
-                            ${breakdown.servicesCost > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
-                              <span>Services additionnels:</span>
-                              <span style="color: #d4a574; font-weight: bold;">+${breakdown.servicesCost}$</span>
-                            </div>
-                            ` : ''}
-                            ${breakdown.complexItemsCost > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
-                              <span>Articles complexes:</span>
-                              <span style="color: #d4a574; font-weight: bold;">+${breakdown.complexItemsCost}$</span>
-                            </div>
-                            ` : ''}
-                            ${breakdown.floorCost > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
-                              <span>Étages sans ascenseur:</span>
-                              <span style="color: #d4a574; font-weight: bold;">+${breakdown.floorCost}$</span>
-                            </div>
-                            ` : ''}
-                            <div style="display: flex; justify-content: space-between; font-weight: bold; color: #d4a574; margin-top: 20px; padding-top: 15px; border-top: 2px solid #d4a574; font-size: 16px;">
-                              <span>Total estimé:</span>
-                              <span>${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
-                            </div>
+                  <div class="form_message-success" style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); color: #ffffff; padding: 0; border-radius: 16px; border: 3px solid #d4a574; margin: 20px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden;">
+                    
+                    <!-- Header with gradient background -->
+                    <div style="background: linear-gradient(135deg, #d4a574 0%, #c19a5f 100%); padding: 30px; text-align: center; position: relative;">
+                      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"grain\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><circle cx=\"25\" cy=\"25\" r=\"1\" fill=\"rgba(255,255,255,0.1)\"/><circle cx=\"75\" cy=\"75\" r=\"1\" fill=\"rgba(255,255,255,0.1)\"/><circle cx=\"50\" cy=\"10\" r=\"0.5\" fill=\"rgba(255,255,255,0.1)\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23grain)\"/></svg>'); opacity: 0.3;"></div>
+                      <h3 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.3); position: relative; z-index: 1;">🎉 Estimation Prête!</h3>
+                      <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 16px; opacity: 0.9; position: relative; z-index: 1;">Votre devis personnalisé</p>
+                    </div>
+                    
+                    <!-- Main content -->
+                    <div style="padding: 40px;">
+                      <!-- Price highlight -->
+                      <div style="text-align: center; margin-bottom: 40px;">
+                        <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); padding: 30px; border-radius: 12px; border: 2px solid #333; position: relative;">
+                          <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #d4a574; color: #ffffff; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: bold;">ESTIMATION</div>
+                          <div style="font-size: 48px; font-weight: bold; color: #d4a574; margin: 20px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                            ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
                           </div>
-                        </div>
-                        
-                        <div style="background-color: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #333; margin: 20px 0;">
-                          <p style="color: #ffffff; margin: 0; font-size: 16px; line-height: 1.6;">
-                            <span style="color: #d4a574;">📞</span> Un de nos experts vous contactera dans les <strong style="color: #d4a574;">24h</strong> pour un devis personnalisé.
-                          </p>
+                          <p style="color: #cccccc; margin: 0; font-size: 16px;">Prix final estimé</p>
                         </div>
                       </div>
                       
-                      <p style="color: #cccccc; font-size: 14px; margin-top: 20px;">
-                        Vérifiez votre email pour plus de détails.
+                      <!-- Detailed breakdown -->
+                      <div style="background: #1a1a1a; padding: 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 30px;">
+                        <h4 style="color: #d4a574; margin: 0 0 25px 0; font-size: 20px; display: flex; align-items: center;">
+                          <span style="background: #d4a574; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 14px;">📋</span>
+                          Détail de l'estimation
+                        </h4>
+                        
+                        <div style="space-y: 15px;">
+                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
+                            <span style="color: #ffffff; font-size: 16px;">Prix de base (${getResidenceTypeLabel(data['Multi-form-11-People'])})</span>
+                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
+                          </div>
+                          ${breakdown.distanceCost > 0 ? `
+                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
+                            <span style="color: #ffffff; font-size: 16px;">Distance (${data['Multi-Form-11-Distance'] || 0} km)</span>
+                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.distanceCost}$</span>
+                          </div>
+                          ` : ''}
+                          ${breakdown.servicesCost > 0 ? `
+                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
+                            <span style="color: #ffffff; font-size: 16px;">Services additionnels</span>
+                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.servicesCost}$</span>
+                          </div>
+                          ` : ''}
+                          ${breakdown.complexItemsCost > 0 ? `
+                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
+                            <span style="color: #ffffff; font-size: 16px;">Articles complexes</span>
+                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.complexItemsCost}$</span>
+                          </div>
+                          ` : ''}
+                          ${breakdown.floorCost > 0 ? `
+                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
+                            <span style="color: #ffffff; font-size: 16px;">Étages sans ascenseur</span>
+                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.floorCost}$</span>
+                          </div>
+                          ` : ''}
+                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-top: 15px; border-top: 2px solid #d4a574;">
+                            <span style="color: #d4a574; font-weight: bold; font-size: 18px;">Total estimé</span>
+                            <span style="color: #d4a574; font-weight: bold; font-size: 20px;">${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <!-- Call to action -->
+                      <div style="background: linear-gradient(135deg, #d4a574 0%, #c19a5f 100%); padding: 25px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
+                        <p style="color: #ffffff; margin: 0; font-size: 18px; font-weight: bold;">
+                          📞 Un expert vous contactera dans les <strong>24h</strong>
+                        </p>
+                        <p style="color: #ffffff; margin: 8px 0 0 0; font-size: 14px; opacity: 0.9;">
+                          Pour un devis personnalisé et sans engagement
+                        </p>
+                      </div>
+                      
+                      <p style="color: #cccccc; font-size: 14px; text-align: center; margin: 0;">
+                        Vérifiez votre email pour plus de détails
                       </p>
                     </div>
                   </div>

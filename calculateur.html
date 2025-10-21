@@ -735,14 +735,6 @@ margin: 0rem !important;
                               <div class="w-form-formradioinput w-form-formradioinput--inputType-custom form_radio-btn-icon is-alternate w-radio-input"></div><input type="radio" name="Multi-form-11-Type" id="Multi-form-11-Type-Option-4" data-name="Multi-form 11 Type" style="opacity:0;position:absolute;z-index:-1" value="Multi-form 11 Type Option 4"><span class="form_radio-btn-label is-alternate w-form-label" for="Multi-form-11-Type-Option-4">Autre</span>
                             </label></div>
                         </div>
-                        <div class="multi-form11_field-wrapper"><label for="Multi-Form-11-Budget" class="form_field-label is-alternate">Votre budget estimé</label><select id="Multi-Form-11-Budget" name="Multi-Form-11-Budget" data-name="Multi Form 11 Budget" class="form_input is-select-input is-alternate w-select">
-                            <option value="">Sélectionnez votre budget</option>
-                            <option value="500-1000">500$ - 1,000$</option>
-                            <option value="1000-2000">1,000$ - 2,000$</option>
-                            <option value="2000-3000">2,000$ - 3,000$</option>
-                            <option value="3000-5000">3,000$ - 5,000$</option>
-                            <option value="5000+">5,000$ et plus</option>
-                          </select></div>
                         <div class="multi-form11_field-wrapper"><label for="Multi-Form-11-Distance" class="form_field-label is-alternate">Distance de déménagement (km)</label><input class="form_input is-alternate w-input" maxlength="10" name="Multi-Form-11-Distance" data-name="Multi Form 11 Distance" placeholder="Ex: 25" type="number" id="Multi-Form-11-Distance"></div>
                         <div class="multi-form11_field-wrapper"><label for="Multi-Form-11-Project" class="form_field-label is-alternate">Détails du déménagement</label><textarea class="form_input is-alternate w-input" maxlength="500" name="Multi-Form-11-Project" data-name="Multi Form 11 Project" placeholder="Décrivez vos besoins spécifiques (meubles volumineux, objets fragiles, etc.)" id="Multi-Form-11-Project" style="min-height: 80px; resize: vertical;"></textarea></div>
                         <div id="w-node-_76b29f76-c485-550a-3eef-0c7e31502e4c-2567976e" class="button-group is-right">
@@ -1727,132 +1719,87 @@ margin: 0rem !important;
                 const destinationLabel = getDestinationLabel(data['Multi-Form-11-Country']);
                 
                 successMessage.innerHTML = `
-                  <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 40px; border-radius: 8px; margin: 20px 0;">
-                    <h3 style="color: #d4a574; margin-bottom: 30px; font-size: 28px; text-align: center;">Votre estimation est prête</h3>
+                  <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 30px; border-radius: 8px; margin: 20px 0;">
+                    <h3 style="color: #d4a574; margin-bottom: 25px; font-size: 24px; text-align: center;">Votre estimation est prête</h3>
                     
-                    <div style="text-align: center; margin-bottom: 40px;">
-                      <div style="font-size: 48px; font-weight: bold; color: #d4a574; margin-bottom: 10px;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                      <div style="font-size: 42px; font-weight: bold; color: #d4a574; margin-bottom: 8px;">
                         ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
                       </div>
-                      <p style="color: #cccccc; margin: 0; font-size: 16px;">Prix final estimé</p>
+                      <p style="color: #cccccc; margin: 0; font-size: 14px;">Prix final estimé</p>
                     </div>
                     
-                    <!-- Vos sélections -->
-                    <div style="background-color: #2a2a2a; padding: 25px; border-radius: 6px; margin-bottom: 25px;">
-                      <h4 style="color: #d4a574; margin: 0 0 20px 0; font-size: 20px;">Vos sélections</h4>
+                    <!-- Détail de l'estimation -->
+                    <div style="background-color: #2a2a2a; padding: 20px; border-radius: 6px; margin-bottom: 25px;">
+                      <h4 style="color: #d4a574; margin: 0 0 20px 0; font-size: 18px;">Détail de l'estimation</h4>
                       
-                      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-                        <div>
-                          <div style="color: #888; font-size: 14px; margin-bottom: 4px;">Type de service</div>
-                          <div style="color: #ffffff; font-weight: 500;">${serviceTypeLabel}</div>
-                        </div>
-                        <div>
-                          <div style="color: #888; font-size: 14px; margin-bottom: 4px;">Type de résidence</div>
-                          <div style="color: #ffffff; font-weight: 500;">${residenceTypeLabel}</div>
-                        </div>
-                        <div>
-                          <div style="color: #888; font-size: 14px; margin-bottom: 4px;">Distance</div>
-                          <div style="color: #ffffff; font-weight: 500;">${data['Multi-Form-11-Distance'] || 0} km</div>
-                        </div>
-                        <div>
-                          <div style="color: #888; font-size: 14px; margin-bottom: 4px;">Étages</div>
-                          <div style="color: #ffffff; font-weight: 500;">${floorLabel}</div>
-                        </div>
-                        <div>
-                          <div style="color: #888; font-size: 14px; margin-bottom: 4px;">Destination</div>
-                          <div style="color: #ffffff; font-weight: 500;">${destinationLabel}</div>
-                        </div>
-                        <div>
-                          <div style="color: #888; font-size: 14px; margin-bottom: 4px;">Date</div>
-                          <div style="color: #ffffff; font-weight: 500;">${data['Multi-Form-11-Date'] || 'Non spécifiée'}</div>
-                        </div>
-                      </div>
-                      
-                      ${selectedServices ? `
-                      <div style="margin-bottom: 15px;">
-                        <div style="color: #888; font-size: 14px; margin-bottom: 4px;">Services additionnels</div>
-                        <div style="color: #ffffff; font-weight: 500;">${selectedServices}</div>
-                      </div>
-                      ` : ''}
-                      
-                      ${selectedComplexItems ? `
-                      <div style="margin-bottom: 15px;">
-                        <div style="color: #888; font-size: 14px; margin-bottom: 4px;">Articles complexes</div>
-                        <div style="color: #ffffff; font-weight: 500;">${selectedComplexItems}</div>
-                      </div>
-                      ` : ''}
-                    </div>
-                    
-                    <!-- Détail des coûts -->
-                    <div style="background-color: #2a2a2a; padding: 25px; border-radius: 6px; margin-bottom: 30px;">
-                      <h4 style="color: #d4a574; margin: 0 0 20px 0; font-size: 20px;">Détail des coûts</h4>
-                      
-                      <div style="margin-bottom: 15px; padding: 15px; background-color: #1a1a1a; border-radius: 4px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                          <span style="color: #ffffff; font-weight: 500;">Prix de base (${residenceTypeLabel})</span>
-                          <span style="color: #d4a574; font-weight: bold;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
-                        </div>
-                        <div style="color: #888; font-size: 13px; line-height: 1.4;">
-                          Prix de base selon le type de résidence et le service sélectionné
+                      <!-- Prix de base -->
+                      <div style="margin-bottom: 12px; padding: 12px; background-color: #1a1a1a; border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <div>
+                            <div style="color: #ffffff; font-weight: 500; margin-bottom: 2px;">Prix de base (${residenceTypeLabel})</div>
+                            <div style="color: #888; font-size: 12px;">Service: ${serviceTypeLabel}</div>
+                          </div>
+                          <span style="color: #d4a574; font-weight: bold; font-size: 16px;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
                         </div>
                       </div>
                       
                       ${breakdown.distanceCost > 0 ? `
-                      <div style="margin-bottom: 15px; padding: 15px; background-color: #1a1a1a; border-radius: 4px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                          <span style="color: #ffffff; font-weight: 500;">Distance (${data['Multi-Form-11-Distance'] || 0} km)</span>
-                          <span style="color: #d4a574; font-weight: bold;">+${breakdown.distanceCost}$</span>
-                        </div>
-                        <div style="color: #888; font-size: 13px; line-height: 1.4;">
-                          Frais de déplacement (2.50$/km après 10km gratuits)
+                      <div style="margin-bottom: 12px; padding: 12px; background-color: #1a1a1a; border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <div>
+                            <div style="color: #ffffff; font-weight: 500; margin-bottom: 2px;">Distance (${data['Multi-Form-11-Distance'] || 0} km)</div>
+                            <div style="color: #888; font-size: 12px;">2.50$/km après 10km gratuits</div>
+                          </div>
+                          <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.distanceCost}$</span>
                         </div>
                       </div>
                       ` : ''}
                       
                       ${breakdown.servicesCost > 0 ? `
-                      <div style="margin-bottom: 15px; padding: 15px; background-color: #1a1a1a; border-radius: 4px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                          <span style="color: #ffffff; font-weight: 500;">Services additionnels</span>
-                          <span style="color: #d4a574; font-weight: bold;">+${breakdown.servicesCost}$</span>
-                        </div>
-                        <div style="color: #888; font-size: 13px; line-height: 1.4;">
-                          Services optionnels sélectionnés
+                      <div style="margin-bottom: 12px; padding: 12px; background-color: #1a1a1a; border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <div>
+                            <div style="color: #ffffff; font-weight: 500; margin-bottom: 2px;">Services additionnels</div>
+                            <div style="color: #888; font-size: 12px;">${getSelectedServices(data['Multi-form-11-Services[]'])}</div>
+                          </div>
+                          <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.servicesCost}$</span>
                         </div>
                       </div>
                       ` : ''}
                       
                       ${breakdown.complexItemsCost > 0 ? `
-                      <div style="margin-bottom: 15px; padding: 15px; background-color: #1a1a1a; border-radius: 4px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                          <span style="color: #ffffff; font-weight: 500;">Articles complexes</span>
-                          <span style="color: #d4a574; font-weight: bold;">+${breakdown.complexItemsCost}$</span>
-                        </div>
-                        <div style="color: #888; font-size: 13px; line-height: 1.4;">
-                          Articles nécessitant une manipulation spéciale
+                      <div style="margin-bottom: 12px; padding: 12px; background-color: #1a1a1a; border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <div>
+                            <div style="color: #ffffff; font-weight: 500; margin-bottom: 2px;">Articles complexes</div>
+                            <div style="color: #888; font-size: 12px;">${getSelectedComplexItems(data['Multi-form-11-Complex[]'])}</div>
+                          </div>
+                          <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.complexItemsCost}$</span>
                         </div>
                       </div>
                       ` : ''}
                       
                       ${breakdown.floorCost > 0 ? `
-                      <div style="margin-bottom: 15px; padding: 15px; background-color: #1a1a1a; border-radius: 4px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                          <span style="color: #ffffff; font-weight: 500;">Étages sans ascenseur</span>
-                          <span style="color: #d4a574; font-weight: bold;">+${breakdown.floorCost}$</span>
-                        </div>
-                        <div style="color: #888; font-size: 13px; line-height: 1.4;">
-                          Frais supplémentaires pour les étages sans ascenseur
+                      <div style="margin-bottom: 12px; padding: 12px; background-color: #1a1a1a; border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                          <div>
+                            <div style="color: #ffffff; font-weight: 500; margin-bottom: 2px;">Étages sans ascenseur</div>
+                            <div style="color: #888; font-size: 12px;">${floorLabel}</div>
+                          </div>
+                          <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.floorCost}$</span>
                         </div>
                       </div>
                       ` : ''}
                       
-                      <div style="display: flex; justify-content: space-between; font-weight: bold; color: #d4a574; margin-top: 20px; padding-top: 20px; border-top: 2px solid #d4a574; font-size: 20px;">
+                      <div style="display: flex; justify-content: space-between; font-weight: bold; color: #d4a574; margin-top: 15px; padding-top: 15px; border-top: 2px solid #d4a574; font-size: 18px;">
                         <span>Total estimé:</span>
                         <span>${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
                       </div>
                     </div>
                     
-                    <div style="background-color: #2a2a2a; padding: 20px; border-radius: 6px; text-align: center;">
-                      <p style="color: #ffffff; margin: 0; font-size: 16px;">
+                    <div style="background-color: #2a2a2a; padding: 15px; border-radius: 6px; text-align: center;">
+                      <p style="color: #ffffff; margin: 0; font-size: 14px;">
                         Un expert vous contactera dans les <strong style="color: #d4a574;">24h</strong> pour un devis personnalisé.
                       </p>
                     </div>
@@ -2035,7 +1982,9 @@ margin: 0rem !important;
       };
       
       if (Array.isArray(services)) {
-        return services.map(service => serviceLabels[service] || service).join(', ');
+        // Remove duplicates and map to labels
+        const uniqueServices = [...new Set(services)];
+        return uniqueServices.map(service => serviceLabels[service] || service).join(', ');
       } else {
         return serviceLabels[services] || services;
       }
@@ -2054,7 +2003,9 @@ margin: 0rem !important;
       };
       
       if (Array.isArray(complexItems)) {
-        return complexItems.map(item => itemLabels[item] || item).join(', ');
+        // Remove duplicates and map to labels
+        const uniqueItems = [...new Set(complexItems)];
+        return uniqueItems.map(item => itemLabels[item] || item).join(', ');
       } else {
         return itemLabels[complexItems] || complexItems;
       }

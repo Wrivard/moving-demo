@@ -37,31 +37,56 @@ select option {
   color: #ffffff !important;
 }
 
-/* Fix radio button styling - Use brand gold color */
-.form_checkbox-btn.is-active-inputactive {
-  background-color: #d4a574 !important;
-  color: #ffffff !important;
-}
-
+/* Fix radio button styling - Use brand gold color with smooth transitions */
 .form_checkbox-btn {
   background-color: #1a1a1a !important;
   color: #ffffff !important;
   border: 1px solid #333 !important;
+  transition: all 0.3s ease !important;
+  cursor: pointer !important;
 }
 
 .form_checkbox-btn:hover {
   background-color: #2a2a2a !important;
+  border-color: #555 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
 }
 
-/* Fix button styling - Keep on brand */
+.form_checkbox-btn.is-active-inputactive {
+  background-color: #d4a574 !important;
+  color: #ffffff !important;
+  border-color: #d4a574 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3) !important;
+}
+
+.form_checkbox-btn.is-active-inputactive:hover {
+  background-color: #c19a5f !important;
+  border-color: #c19a5f !important;
+}
+
+/* Fix button styling - Keep on brand with smooth transitions */
 .button.is-secondary {
   background-color: #2a2a2a !important;
   color: #ffffff !important;
   border: 1px solid #333 !important;
+  transition: all 0.3s ease !important;
 }
 
 .button.is-secondary:hover {
   background-color: #1a1a1a !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+.button {
+  transition: all 0.3s ease !important;
+}
+
+.button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3) !important;
 }
 
 /* Fix input field icons */
@@ -1149,7 +1174,7 @@ margin: 0rem !important;
           });
         });
         
-        // Fix radio button functionality
+        // Fix radio button functionality with proper visual feedback
         const radioButtons = document.querySelectorAll('input[type="radio"]');
         radioButtons.forEach(radio => {
           radio.addEventListener('change', function() {
@@ -1157,21 +1182,70 @@ margin: 0rem !important;
             const groupName = this.name;
             const groupRadios = document.querySelectorAll(`input[name="${groupName}"]`);
             groupRadios.forEach(r => {
-              r.closest('label').classList.remove('is-active-inputactive');
+              const label = r.closest('label');
+              label.classList.remove('is-active-inputactive');
+              label.style.backgroundColor = '#1a1a1a';
+              label.style.borderColor = '#333';
+              label.style.color = '#ffffff';
             });
             // Add active class to selected radio button
-            this.closest('label').classList.add('is-active-inputactive');
+            const selectedLabel = this.closest('label');
+            selectedLabel.classList.add('is-active-inputactive');
+            selectedLabel.style.backgroundColor = '#d4a574';
+            selectedLabel.style.borderColor = '#d4a574';
+            selectedLabel.style.color = '#ffffff';
+          });
+          
+          // Add hover effects
+          radio.addEventListener('mouseenter', function() {
+            if (!this.checked) {
+              const label = this.closest('label');
+              label.style.backgroundColor = '#2a2a2a';
+              label.style.borderColor = '#555';
+            }
+          });
+          
+          radio.addEventListener('mouseleave', function() {
+            if (!this.checked) {
+              const label = this.closest('label');
+              label.style.backgroundColor = '#1a1a1a';
+              label.style.borderColor = '#333';
+            }
           });
         });
         
-        // Fix checkbox functionality
+        // Fix checkbox functionality with proper visual feedback
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         checkboxes.forEach(checkbox => {
           checkbox.addEventListener('change', function() {
+            const label = this.closest('label');
             if (this.checked) {
-              this.closest('label').classList.add('is-active-inputactive');
+              label.classList.add('is-active-inputactive');
+              label.style.backgroundColor = '#d4a574';
+              label.style.borderColor = '#d4a574';
+              label.style.color = '#ffffff';
             } else {
-              this.closest('label').classList.remove('is-active-inputactive');
+              label.classList.remove('is-active-inputactive');
+              label.style.backgroundColor = '#1a1a1a';
+              label.style.borderColor = '#333';
+              label.style.color = '#ffffff';
+            }
+          });
+          
+          // Add hover effects
+          checkbox.addEventListener('mouseenter', function() {
+            if (!this.checked) {
+              const label = this.closest('label');
+              label.style.backgroundColor = '#2a2a2a';
+              label.style.borderColor = '#555';
+            }
+          });
+          
+          checkbox.addEventListener('mouseleave', function() {
+            if (!this.checked) {
+              const label = this.closest('label');
+              label.style.backgroundColor = '#1a1a1a';
+              label.style.borderColor = '#333';
             }
           });
         });
@@ -1236,11 +1310,42 @@ margin: 0rem !important;
           submitBtn.value = 'Calcul en cours...';
           submitBtn.disabled = true;
           
-          // Get form data
+          // Get form data properly including radio buttons and checkboxes
           const formData = new FormData(form);
           const data = {};
+          
+          // Handle regular form fields
           formData.forEach((value, key) => {
-            data[key] = value;
+            if (data[key]) {
+              // If key already exists, make it an array
+              if (Array.isArray(data[key])) {
+                data[key].push(value);
+              } else {
+                data[key] = [data[key], value];
+              }
+            } else {
+              data[key] = value;
+            }
+          });
+          
+          // Handle radio buttons explicitly
+          const radioButtons = document.querySelectorAll('input[type="radio"]:checked');
+          radioButtons.forEach(radio => {
+            data[radio.name] = radio.value;
+          });
+          
+          // Handle checkboxes explicitly
+          const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+          checkboxes.forEach(checkbox => {
+            if (data[checkbox.name]) {
+              if (Array.isArray(data[checkbox.name])) {
+                data[checkbox.name].push(checkbox.value);
+              } else {
+                data[checkbox.name] = [data[checkbox.name], checkbox.value];
+              }
+            } else {
+              data[checkbox.name] = checkbox.value;
+            }
           });
 
           try {
@@ -1256,64 +1361,67 @@ margin: 0rem !important;
             const result = await response.json();
             
             if (result.success) {
-              // Show success message with detailed quote
+              // Show success message with detailed quote - ON BRAND DARK THEME
               form.style.display = 'none';
               if (successMessage) {
                 const breakdown = result.quote.breakdown;
                 successMessage.innerHTML = `
-                  <div class="form_message-success">
-                    <div style="text-align: center; padding: 20px;">
-                      <h3 style="color: #2c3e50; margin-bottom: 20px;">🎉 Votre estimation est prête!</h3>
-                      <div style="background-color: #f8f9fa; padding: 30px; border-radius: 8px; border: 2px solid #d4a574; margin: 20px 0;">
-                        <h4 style="color: #2c3e50; margin-bottom: 15px;">💰 Estimation de votre déménagement</h4>
-                        <div style="font-size: 32px; font-weight: bold; color: #d4a574; margin: 15px 0;">
+                  <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 40px; border-radius: 12px; border: 2px solid #d4a574; margin: 20px 0;">
+                    <div style="text-align: center;">
+                      <h3 style="color: #d4a574; margin-bottom: 30px; font-size: 28px; font-weight: bold;">🎉 Votre estimation est prête!</h3>
+                      
+                      <div style="background-color: #2a2a2a; padding: 30px; border-radius: 8px; border: 1px solid #333; margin: 20px 0;">
+                        <h4 style="color: #d4a574; margin-bottom: 20px; font-size: 20px;">💰 Estimation de votre déménagement</h4>
+                        <div style="font-size: 36px; font-weight: bold; color: #d4a574; margin: 20px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
                           ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
                         </div>
                         
-                        <div style="background-color: #ffffff; padding: 20px; border-radius: 6px; margin: 20px 0; text-align: left;">
-                          <h5 style="color: #2c3e50; margin-bottom: 15px; font-size: 16px;">📋 Détail de l'estimation:</h5>
-                          <div style="font-size: 14px; color: #34495e; line-height: 1.6;">
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <div style="background-color: #1a1a1a; padding: 25px; border-radius: 8px; margin: 25px 0; text-align: left; border: 1px solid #333;">
+                          <h5 style="color: #d4a574; margin-bottom: 20px; font-size: 18px;">📋 Détail de l'estimation:</h5>
+                          <div style="font-size: 14px; color: #ffffff; line-height: 1.8;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
                               <span>Prix de base (${getResidenceTypeLabel(data['Multi-form-11-People'])}):</span>
-                              <span>${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
+                              <span style="color: #d4a574; font-weight: bold;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
                             </div>
                             ${breakdown.distanceCost > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
                               <span>Distance (${data['Multi-Form-11-Distance'] || 0} km):</span>
-                              <span>+${breakdown.distanceCost}$</span>
+                              <span style="color: #d4a574; font-weight: bold;">+${breakdown.distanceCost}$</span>
                             </div>
                             ` : ''}
                             ${breakdown.servicesCost > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
                               <span>Services additionnels:</span>
-                              <span>+${breakdown.servicesCost}$</span>
+                              <span style="color: #d4a574; font-weight: bold;">+${breakdown.servicesCost}$</span>
                             </div>
                             ` : ''}
                             ${breakdown.complexItemsCost > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
                               <span>Articles complexes:</span>
-                              <span>+${breakdown.complexItemsCost}$</span>
+                              <span style="color: #d4a574; font-weight: bold;">+${breakdown.complexItemsCost}$</span>
                             </div>
                             ` : ''}
                             ${breakdown.floorCost > 0 ? `
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 8px 0; border-bottom: 1px solid #333;">
                               <span>Étages sans ascenseur:</span>
-                              <span>+${breakdown.floorCost}$</span>
+                              <span style="color: #d4a574; font-weight: bold;">+${breakdown.floorCost}$</span>
                             </div>
                             ` : ''}
-                            <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
-                            <div style="display: flex; justify-content: space-between; font-weight: bold; color: #2c3e50;">
+                            <div style="display: flex; justify-content: space-between; font-weight: bold; color: #d4a574; margin-top: 20px; padding-top: 15px; border-top: 2px solid #d4a574; font-size: 16px;">
                               <span>Total estimé:</span>
                               <span>${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
                             </div>
                           </div>
                         </div>
                         
-                        <p style="color: #34495e; margin: 10px 0;">
-                          Un de nos experts vous contactera dans les 24h pour un devis personnalisé.
-                        </p>
+                        <div style="background-color: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #333; margin: 20px 0;">
+                          <p style="color: #ffffff; margin: 0; font-size: 16px; line-height: 1.6;">
+                            <span style="color: #d4a574;">📞</span> Un de nos experts vous contactera dans les <strong style="color: #d4a574;">24h</strong> pour un devis personnalisé.
+                          </p>
+                        </div>
                       </div>
-                      <p style="color: #34495e; font-size: 14px;">
+                      
+                      <p style="color: #cccccc; font-size: 14px; margin-top: 20px;">
                         Vérifiez votre email pour plus de détails.
                       </p>
                     </div>

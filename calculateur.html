@@ -1494,6 +1494,8 @@ margin: 0rem !important;
         let isValid = true;
         let errorMessage = '';
         
+        console.log('Validating step:', currentStep);
+        
         // Clear previous error messages
         clearErrorMessages();
         
@@ -1501,7 +1503,8 @@ margin: 0rem !important;
           case 0: // Step 1: Personal Information
             const name = document.getElementById('Multi-Form-11-Name')?.value?.trim();
             const email = document.getElementById('Multi-Form-11-Email')?.value?.trim();
-            const phone = document.getElementById('Multi-Form-11-Phone')?.value?.trim();
+            
+            console.log('Step 1 validation - Name:', name, 'Email:', email);
             
             if (!name) {
               showFieldError('Multi-Form-11-Name', 'Le nom est requis');
@@ -1512,10 +1515,6 @@ margin: 0rem !important;
               isValid = false;
             } else if (!isValidEmail(email)) {
               showFieldError('Multi-Form-11-Email', 'Veuillez entrer un email valide');
-              isValid = false;
-            }
-            if (!phone) {
-              showFieldError('Multi-Form-11-Phone', 'Le téléphone est requis');
               isValid = false;
             }
             break;

@@ -327,8 +327,7 @@ select option:checked {
 /* Custom date picker styling - Shadcn style */
 .form_input[type="date"] {
   padding-left: 12px !important;
-  padding-right: 40px !important;
-  position: relative !important;
+  padding-right: 12px !important;
   background-color: #2a2a2a !important;
   border: 1px solid #555 !important;
   border-radius: 6px !important;
@@ -348,12 +347,8 @@ select option:checked {
   border-color: #777 !important;
 }
 
-/* Hide the default date picker icon and create custom one */
+/* Style the date picker icon */
 .form_input[type="date"]::-webkit-calendar-picker-indicator {
-  position: absolute !important;
-  right: 12px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
   background: transparent !important;
   color: #f58220 !important;
   cursor: pointer !important;
@@ -364,10 +359,6 @@ select option:checked {
 
 /* Firefox date picker styling */
 .form_input[type="date"]::-moz-calendar-picker-indicator {
-  position: absolute !important;
-  right: 12px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
   background: transparent !important;
   color: #f58220 !important;
   cursor: pointer !important;
@@ -1817,8 +1808,15 @@ margin: 0rem !important;
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
                           <div style="flex: 1;">
-                            <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Prix de base (${residenceTypeLabel})</div>
-                            <div style="color: #888; font-size: 14px; line-height: 1.4;">Service: ${serviceTypeLabel}</div>
+                            <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 8px;">Prix de base</div>
+                            <div style="color: #888; font-size: 14px; line-height: 1.6; margin-bottom: 4px;">• ${serviceTypeLabel}</div>
+                            <div style="color: #888; font-size: 14px; line-height: 1.6; margin-bottom: 4px;">• ${residenceTypeLabel}</div>
+                            ${getSelectedServices(data['Multi-form-11-Services[]']) ? `
+                            <div style="color: #888; font-size: 14px; line-height: 1.6; margin-bottom: 4px;">• ${getSelectedServices(data['Multi-form-11-Services[]'])}</div>
+                            ` : ''}
+                            ${getSelectedComplexItems(data['Multi-form-11-Complex[]']) ? `
+                            <div style="color: #888; font-size: 14px; line-height: 1.6; margin-bottom: 4px;">• ${getSelectedComplexItems(data['Multi-form-11-Complex[]'])}</div>
+                            ` : ''}
                           </div>
                           <div style="color: #f58220; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</div>
                         </div>
@@ -1836,29 +1834,6 @@ margin: 0rem !important;
                       </div>
                       ` : ''}
                       
-                      ${breakdown.servicesCost > 0 ? `
-                      <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                          <div style="flex: 1;">
-                            <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Services additionnels</div>
-                            <div style="color: #888; font-size: 14px; line-height: 1.4;">${getSelectedServices(data['Multi-form-11-Services[]'])}</div>
-                          </div>
-                          <div style="color: #f58220; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.servicesCost}$</div>
-                        </div>
-                      </div>
-                      ` : ''}
-                      
-                      ${breakdown.complexItemsCost > 0 ? `
-                      <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">
-                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                          <div style="flex: 1;">
-                            <div style="color: #ffffff; font-weight: 600; font-size: 16px; margin-bottom: 6px;">Articles complexes</div>
-                            <div style="color: #888; font-size: 14px; line-height: 1.4;">${getSelectedComplexItems(data['Multi-form-11-Complex[]'])}</div>
-                          </div>
-                          <div style="color: #f58220; font-weight: bold; font-size: 18px; text-align: right; min-width: 140px;">+${breakdown.complexItemsCost}$</div>
-                        </div>
-                      </div>
-                      ` : ''}
                       
                       ${breakdown.floorCost > 0 ? `
                       <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid #333;">

@@ -1713,88 +1713,101 @@ margin: 0rem !important;
             const result = await response.json();
             
             if (result.success) {
-              // Show success message with beautiful, professional quote design
+              // Show simple, clean quote
               form.style.display = 'none';
               if (successMessage) {
                 const breakdown = result.quote.breakdown;
+                
+                // Get user choices for display
+                const serviceTypeLabel = getServiceTypeLabel(data['Multi-form-11-Type']);
+                const residenceTypeLabel = getResidenceTypeLabel(data['Multi-form-11-People']);
+                const selectedServices = getSelectedServices(data['Multi-form-11-Services[]']);
+                const selectedComplexItems = getSelectedComplexItems(data['Multi-form-11-Complex[]']);
+                const floorLabel = getFloorLabel(data['Multi-form-11-Floors']);
+                const destinationLabel = getDestinationLabel(data['Multi-Form-11-Country']);
+                
                 successMessage.innerHTML = `
-                  <div class="form_message-success" style="background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); color: #ffffff; padding: 0; border-radius: 16px; border: 3px solid #d4a574; margin: 20px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.3); overflow: hidden;">
+                  <div class="form_message-success" style="background-color: #1a1a1a; color: #ffffff; padding: 30px; border-radius: 8px; border: 1px solid #d4a574; margin: 20px 0;">
+                    <h3 style="color: #d4a574; margin-bottom: 20px; font-size: 24px;">Votre estimation est prête</h3>
                     
-                    <!-- Header with gradient background -->
-                    <div style="background: linear-gradient(135deg, #d4a574 0%, #c19a5f 100%); padding: 30px; text-align: center; position: relative;">
-                      <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"grain\" width=\"100\" height=\"100\" patternUnits=\"userSpaceOnUse\"><circle cx=\"25\" cy=\"25\" r=\"1\" fill=\"rgba(255,255,255,0.1)\"/><circle cx=\"75\" cy=\"75\" r=\"1\" fill=\"rgba(255,255,255,0.1)\"/><circle cx=\"50\" cy=\"10\" r=\"0.5\" fill=\"rgba(255,255,255,0.1)\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23grain)\"/></svg>'); opacity: 0.3;"></div>
-                      <h3 style="color: #ffffff; margin: 0; font-size: 32px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.3); position: relative; z-index: 1;">🎉 Estimation Prête!</h3>
-                      <p style="color: #ffffff; margin: 10px 0 0 0; font-size: 16px; opacity: 0.9; position: relative; z-index: 1;">Votre devis personnalisé</p>
+                    <div style="text-align: center; margin-bottom: 30px;">
+                      <div style="font-size: 36px; font-weight: bold; color: #d4a574; margin-bottom: 10px;">
+                        ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
+                      </div>
+                      <p style="color: #cccccc; margin: 0;">Prix final estimé</p>
                     </div>
                     
-                    <!-- Main content -->
-                    <div style="padding: 40px;">
-                      <!-- Price highlight -->
-                      <div style="text-align: center; margin-bottom: 40px;">
-                        <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); padding: 30px; border-radius: 12px; border: 2px solid #333; position: relative;">
-                          <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #d4a574; color: #ffffff; padding: 8px 20px; border-radius: 20px; font-size: 14px; font-weight: bold;">ESTIMATION</div>
-                          <div style="font-size: 48px; font-weight: bold; color: #d4a574; margin: 20px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                            ${result.quote.minPrice}$ - ${result.quote.maxPrice}$
-                          </div>
-                          <p style="color: #cccccc; margin: 0; font-size: 16px;">Prix final estimé</p>
-                        </div>
+                    <div style="background-color: #2a2a2a; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+                      <h4 style="color: #d4a574; margin: 0 0 15px 0; font-size: 18px;">Détail de l'estimation</h4>
+                      
+                      <div style="margin-bottom: 15px;">
+                        <strong style="color: #ffffff;">Type de service:</strong> ${serviceTypeLabel}
+                      </div>
+                      <div style="margin-bottom: 15px;">
+                        <strong style="color: #ffffff;">Type de résidence:</strong> ${residenceTypeLabel}
+                      </div>
+                      <div style="margin-bottom: 15px;">
+                        <strong style="color: #ffffff;">Distance:</strong> ${data['Multi-Form-11-Distance'] || 0} km
+                      </div>
+                      ${selectedServices ? `
+                      <div style="margin-bottom: 15px;">
+                        <strong style="color: #ffffff;">Services additionnels:</strong> ${selectedServices}
+                      </div>
+                      ` : ''}
+                      ${selectedComplexItems ? `
+                      <div style="margin-bottom: 15px;">
+                        <strong style="color: #ffffff;">Articles complexes:</strong> ${selectedComplexItems}
+                      </div>
+                      ` : ''}
+                      <div style="margin-bottom: 15px;">
+                        <strong style="color: #ffffff;">Étages:</strong> ${floorLabel}
+                      </div>
+                      <div style="margin-bottom: 15px;">
+                        <strong style="color: #ffffff;">Région de destination:</strong> ${destinationLabel}
+                      </div>
+                      <div style="margin-bottom: 15px;">
+                        <strong style="color: #ffffff;">Date de déménagement:</strong> ${data['Multi-Form-11-Date'] || 'Non spécifiée'}
                       </div>
                       
-                      <!-- Detailed breakdown -->
-                      <div style="background: #1a1a1a; padding: 30px; border-radius: 12px; border: 1px solid #333; margin-bottom: 30px;">
-                        <h4 style="color: #d4a574; margin: 0 0 25px 0; font-size: 20px; display: flex; align-items: center;">
-                          <span style="background: #d4a574; color: #ffffff; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 14px;">📋</span>
-                          Détail de l'estimation
-                        </h4>
-                        
-                        <div style="space-y: 15px;">
-                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
-                            <span style="color: #ffffff; font-size: 16px;">Prix de base (${getResidenceTypeLabel(data['Multi-form-11-People'])})</span>
-                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
-                          </div>
-                          ${breakdown.distanceCost > 0 ? `
-                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
-                            <span style="color: #ffffff; font-size: 16px;">Distance (${data['Multi-Form-11-Distance'] || 0} km)</span>
-                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.distanceCost}$</span>
-                          </div>
-                          ` : ''}
-                          ${breakdown.servicesCost > 0 ? `
-                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
-                            <span style="color: #ffffff; font-size: 16px;">Services additionnels</span>
-                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.servicesCost}$</span>
-                          </div>
-                          ` : ''}
-                          ${breakdown.complexItemsCost > 0 ? `
-                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
-                            <span style="color: #ffffff; font-size: 16px;">Articles complexes</span>
-                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.complexItemsCost}$</span>
-                          </div>
-                          ` : ''}
-                          ${breakdown.floorCost > 0 ? `
-                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #333;">
-                            <span style="color: #ffffff; font-size: 16px;">Étages sans ascenseur</span>
-                            <span style="color: #d4a574; font-weight: bold; font-size: 16px;">+${breakdown.floorCost}$</span>
-                          </div>
-                          ` : ''}
-                          <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 0; margin-top: 15px; border-top: 2px solid #d4a574;">
-                            <span style="color: #d4a574; font-weight: bold; font-size: 18px;">Total estimé</span>
-                            <span style="color: #d4a574; font-weight: bold; font-size: 20px;">${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
-                          </div>
-                        </div>
-                      </div>
+                      <hr style="border: none; border-top: 1px solid #555; margin: 20px 0;">
                       
-                      <!-- Call to action -->
-                      <div style="background: linear-gradient(135deg, #d4a574 0%, #c19a5f 100%); padding: 25px; border-radius: 12px; text-align: center; margin-bottom: 20px;">
-                        <p style="color: #ffffff; margin: 0; font-size: 18px; font-weight: bold;">
-                          📞 Un expert vous contactera dans les <strong>24h</strong>
-                        </p>
-                        <p style="color: #ffffff; margin: 8px 0 0 0; font-size: 14px; opacity: 0.9;">
-                          Pour un devis personnalisé et sans engagement
-                        </p>
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: #ffffff;">Prix de base:</span>
+                        <span style="color: #d4a574; font-weight: bold;">${breakdown.basePrice.min}$ - ${breakdown.basePrice.max}$</span>
                       </div>
-                      
-                      <p style="color: #cccccc; font-size: 14px; text-align: center; margin: 0;">
-                        Vérifiez votre email pour plus de détails
+                      ${breakdown.distanceCost > 0 ? `
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: #ffffff;">Distance (${data['Multi-Form-11-Distance'] || 0} km):</span>
+                        <span style="color: #d4a574; font-weight: bold;">+${breakdown.distanceCost}$</span>
+                      </div>
+                      ` : ''}
+                      ${breakdown.servicesCost > 0 ? `
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: #ffffff;">Services additionnels:</span>
+                        <span style="color: #d4a574; font-weight: bold;">+${breakdown.servicesCost}$</span>
+                      </div>
+                      ` : ''}
+                      ${breakdown.complexItemsCost > 0 ? `
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: #ffffff;">Articles complexes:</span>
+                        <span style="color: #d4a574; font-weight: bold;">+${breakdown.complexItemsCost}$</span>
+                      </div>
+                      ` : ''}
+                      ${breakdown.floorCost > 0 ? `
+                      <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: #ffffff;">Étages sans ascenseur:</span>
+                        <span style="color: #d4a574; font-weight: bold;">+${breakdown.floorCost}$</span>
+                      </div>
+                      ` : ''}
+                      <div style="display: flex; justify-content: space-between; font-weight: bold; color: #d4a574; margin-top: 15px; padding-top: 15px; border-top: 2px solid #d4a574;">
+                        <span>Total estimé:</span>
+                        <span>${result.quote.minPrice}$ - ${result.quote.maxPrice}$</span>
+                      </div>
+                    </div>
+                    
+                    <div style="background-color: #2a2a2a; padding: 15px; border-radius: 6px; text-align: center;">
+                      <p style="color: #ffffff; margin: 0; font-size: 16px;">
+                        Un expert vous contactera dans les <strong style="color: #d4a574;">24h</strong> pour un devis personnalisé.
                       </p>
                     </div>
                   </div>
@@ -1957,14 +1970,88 @@ margin: 0rem !important;
     // Helper function to get residence type labels
     function getResidenceTypeLabel(residenceType) {
       const labels = {
-        'Multi-form 11 People Option 1': 'Petite résidence',
-        'Multi-form 11 People Option 2': 'Appartement',
-        'Multi-form 11 People Option 3': 'Maison moyenne',
-        'Multi-form 11 People Option 4': 'Grande maison',
-        'Multi-form 11 People Option 5': 'Maison familiale',
-        'Multi-form 11 People Option 6': 'Propriété complexe'
+        'Multi-form 11 People Option 1': 'Petite résidence (1-2 chambres)',
+        'Multi-form 11 People Option 2': 'Appartement (2-3 chambres)',
+        'Multi-form 11 People Option 3': 'Maison moyenne (3-4 chambres)',
+        'Multi-form 11 People Option 4': 'Grande maison (4-5 chambres)',
+        'Multi-form 11 People Option 5': 'Maison familiale (5+ chambres)',
+        'Multi-form 11 People Option 6': 'Propriété complexe (bureau, entrepôt)'
       };
       return labels[residenceType] || residenceType;
+    }
+    
+    // Helper function to get service type labels
+    function getServiceTypeLabel(serviceType) {
+      const labels = {
+        'Multi-form 11 Type Option 1': 'Déménagement résidentiel',
+        'Multi-form 11 Type Option 2': 'Déménagement commercial',
+        'Multi-form 11 Type Option 3': 'Déménagement longue distance',
+        'Multi-form 11 Type Option 4': 'Autre'
+      };
+      return labels[serviceType] || serviceType;
+    }
+    
+    // Helper function to get selected services
+    function getSelectedServices(services) {
+      if (!services) return null;
+      const serviceLabels = {
+        'emballage': 'Emballage professionnel',
+        'montage': 'Montage/Démontage meubles',
+        'nettoyage': 'Nettoyage final',
+        'entreposage': 'Entreposage temporaire'
+      };
+      
+      if (Array.isArray(services)) {
+        return services.map(service => serviceLabels[service] || service).join(', ');
+      } else {
+        return serviceLabels[services] || services;
+      }
+    }
+    
+    // Helper function to get selected complex items
+    function getSelectedComplexItems(complexItems) {
+      if (!complexItems) return null;
+      const itemLabels = {
+        'piano': 'Piano',
+        'billard': 'Table de billard',
+        'antiquites': 'Antiquités/Art',
+        'electromenager': 'Électroménagers lourds',
+        'jardin': 'Équipement de jardin',
+        'aucun': 'Aucun article complexe'
+      };
+      
+      if (Array.isArray(complexItems)) {
+        return complexItems.map(item => itemLabels[item] || item).join(', ');
+      } else {
+        return itemLabels[complexItems] || complexItems;
+      }
+    }
+    
+    // Helper function to get floor labels
+    function getFloorLabel(floors) {
+      const labels = {
+        '0': 'Rez-de-chaussée',
+        '1': '1er étage',
+        '2': '2e étage',
+        '3': '3e étage et plus'
+      };
+      return labels[floors] || 'Non spécifié';
+    }
+    
+    // Helper function to get destination labels
+    function getDestinationLabel(destination) {
+      const labels = {
+        'montreal': 'Montréal',
+        'quebec': 'Québec',
+        'laval': 'Laval',
+        'gatineau': 'Gatineau',
+        'longueuil': 'Longueuil',
+        'sherbrooke': 'Sherbrooke',
+        'trois-rivieres': 'Trois-Rivières',
+        'saguenay': 'Saguenay',
+        'autre': 'Autre région'
+      };
+      return labels[destination] || destination || 'Non spécifiée';
     }
   </script>
 </body>
